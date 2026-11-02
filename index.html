@@ -166,6 +166,25 @@
   .title { font-size: 16px; font-weight: 700; line-height: 1.4; }
   .body { margin-top: 5px; font-size: 14.5px; white-space: pre-wrap; word-break: break-word; }
 
+  /* 수강후기: 교수 카드 & 별점 */
+  .prof { border: 1px solid var(--line); background: var(--soft); border-radius: 12px; padding: 12px; margin-bottom: 8px; }
+  .prof-head { display: flex; gap: 10px; align-items: center; }
+  .prof-ava {
+    width: 40px; height: 40px; border-radius: 10px; background: var(--navy); color: var(--bg); flex-shrink: 0;
+    font-family: "Cinzel", serif; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center;
+  }
+  .prof-name b { display: block; font-size: 15.5px; line-height: 1.3; }
+  .prof-name small { font-size: 12px; color: var(--muted); }
+  .prof-course { margin-top: 9px; font-size: 13.5px; font-weight: 700; }
+  .prof-course .code { font-size: 11px; color: #fff; background: var(--crimson); border-radius: 5px; padding: 1px 6px; margin-right: 6px; vertical-align: 1px; }
+  .prof-rate, .quote { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 6px; font-size: 12.5px; color: var(--muted); }
+  .prof-nick { display: flex; align-items: center; gap: 4px; margin-top: 5px; font-size: 12.5px; color: var(--navy); font-weight: 500; }
+  .prof-nick svg.lucide { width: 13px; height: 13px; }
+  .stars { display: inline-flex; gap: 1px; }
+  .st svg.lucide { width: 15px; height: 15px; color: var(--line); fill: var(--line); }
+  .st.on svg.lucide { color: var(--gold); fill: var(--gold); }
+  .quote { background: var(--soft); border-left: 3px solid var(--gold); border-radius: 8px; padding: 8px 10px; color: var(--text); margin-top: 8px; font-size: 13px; }
+
   .votes { display: flex; flex-direction: column; align-items: center; gap: 2px; width: 40px; flex-shrink: 0; }
   .vote { width: 36px; height: 34px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; color: var(--muted); }
   .vote svg.lucide { width: 22px; height: 22px; }
@@ -229,7 +248,7 @@
   .board-card .latest { font-size: 12.5px; margin-top: 6px; display: flex; gap: 4px; align-items: center; color: var(--text); }
   .board-card .latest svg.lucide { width: 13px; height: 13px; color: var(--muted); }
   .board-card .latest span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .count { font-size: 11px; font-weight: 700; background: var(--soft); color: var(--muted); padding: 2px 8px; border-radius: 999px; margin-left: 6px; }
+  .board-card .count { display: inline-block; font-size: 11px; font-weight: 700; background: var(--soft); color: var(--muted); padding: 2px 8px; border-radius: 999px; margin-left: 6px; }
   .hot-n { width: 24px; text-align: center; font-weight: 700; color: var(--crimson); font-size: 15px; flex-shrink: 0; }
 
   /* ---------- 캠퍼스 ---------- */
@@ -409,6 +428,7 @@
           <button class="trend" data-q="우산">#비오는데_우산쓴놈_누구냐</button>
           <button class="trend" data-q="캐시미어">#핑크캐시미어_범인</button>
           <button class="trend" data-q="펨브로크">#펨브로크홀_밀회</button>
+          <button class="trend" data-q="날파리">#날파리_교수_생존기</button>
           <button class="trend" data-q="빨대">#빨대_사용자_색출</button>
           <button class="trend" data-q="고양이">#고양이_우쭈쭈_범인</button>
           <button class="trend" data-q="프로스트">#프로스트볼_파트너</button>
@@ -587,8 +607,9 @@ const CATS = {
   all:    { label: '전체',             icon: 'flame' },
   alpha:  { label: '알파메일 인증방',   icon: 'dumbbell',       color: '#8B0000', desc: '근수저 인증, 상남자 챌린지, 프로틴 성지' },
   prince: { label: '왕자 목격담',       icon: 'crown',          color: '#A07A2C', desc: '모나코 왕자님 실시간 목격 제보' },
-  bamboo: { label: '펨브로크 대나무숲', icon: 'ghost',          color: '#4B3F8C', desc: '아무도 모르게 털어놓는 곳' },
-  lost:   { label: '분실물 센터',       icon: 'package-search', color: '#1F4D3A', desc: '캠퍼스 분실물·습득물 신고' }
+  bamboo: { label: '펨브로크 컨페션',   icon: 'ghost',          color: '#4B3F8C', desc: 'Pembroke Confessions · 익명 고백, 하소연, 캠퍼스 논쟁' },
+  lost:   { label: '분실물 센터',       icon: 'package-search', color: '#1F4D3A', desc: '캠퍼스 분실물·습득물 신고' },
+  review: { label: '수강후기',          icon: 'graduation-cap', color: '#0F2C59', desc: '교수 강의평가와 수강 생존 정보 공유' }
 };
 
 const AV = {
@@ -610,6 +631,8 @@ const AV = {
   student: { icon: 'book-open', color: '#0F2C59' },
   patrol:  { icon: 'siren',     color: '#B91C1C' },
   watcher: { icon: 'eye',       color: '#374151' },
+  freshman: { icon: 'sprout',   color: '#4D7C0F' },
+  lab:     { icon: 'microscope', color: '#155E75' },
   me:      { icon: 'user',      color: '#C5A059' }
 };
 
@@ -853,12 +876,143 @@ const BASE = [
   }
 ];
 
-// 피드 노출 순서: 알파메일 글 사이사이에 다른 게시판 글을 섞음
-const SEED_ORDER = ['a1', 'p2', 'a2', 'a3', 'p3', 'a4', 'a5', 'p4', 'a6', 'a7', 'p6', 'a8', 'a9', 'p7', 'a10', 'a11', 'a12', 'a13', 'a14', 'a15'];
-const SEED = SEED_ORDER.map(id => [...ALPHA, ...BASE].find(p => p.id === id));
+// 수강후기 게시판: 일반 글 + 교수 강의평가(prof)
+const REVIEWS = [
+  {
+    id: 'r1', cat: 'bamboo', time: '15분 전', up: 198, down: 6,
+    author: { anon: '익명의 신입생', av: 'freshman' },
+    title: '[실시간] 지금 맥 칼란 교수님 대형 강의실 앞줄 생존자 있냐?',
+    body: '오늘 비 와서 습도 높은데 교수님이 히터까지 틀어놓으심. 지금 강의실 공기가 거의 생화학 무기 수준임. 교수님이 팔 들 때마다 겨드랑이 수풀에서 고대 유적지 곰팡이 냄새가 폭풍처럼 밀려오는데, 내 옆자리 남학생 방금 눈 흰자위 보이면서 기절함.\n설상가상으로 교수님 머리 위에서 날파리 두 마리가 짝짓기 비행 중임. 살려줘... 입으로 숨 쉬면 그 냄새가 혀에 내려앉는 기분이야...',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: "코 막으면 '나약한 게이 새끼'라고 F 학점 주시니까 절대 티 내지 마라 ㅋㅋㅋ 미간만 찌푸리고 참아야 함." },
+      { anon: '익명2', av: 'squash', text: '근데 저기 맨 뒷줄 구석에 지오반니(Gio) 봐라 ㅋㅋㅋ 겉으로는 팔짱 끼고 상남자처럼 버티고 있는데 얼굴이 백지장처럼 하얗게 질려서 지난 50분 동안 숨을 안 쉬고 있음 ㅋㅋㅋㅋ 폐활량 미쳤네.' },
+      { ...GIO, anon: '익명3', text: '말 시키지 마 입 열면 그 공기 들어오니까 닥쳐' }
+    ]
+  },
+  {
+    id: 'r3', cat: 'bamboo', time: '3시간 전', up: 143, down: 21,
+    author: { anon: '알파메일 연구소', av: 'lab' },
+    title: "[논쟁] 맥 칼란 교수의 '무세탁 가죽 조끼'는 예술인가 재앙인가",
+    body: '맥 칼란 교수님이 사계절 내내 맨살 위에 걸치시는 그 갈색 가죽 조끼 말인데, 소문에 의하면 대학원생 시절부터 단 한 번도 세탁하지 않고 수컷의 땀으로만 무두질한 전설의 갑옷이라고 함.\n털이 수북한 가슴팍과 가죽 조끼가 마찰하며 만들어내는 그 묵직한 야생 멧돼지 향기... 이것이야말로 애시컴이 지향해야 할 궁극의 마초이즘 아닐까?',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: 'ㄹㅇ 인정합니다. 날파리가 꼬이는 건 교수님이 그만큼 자연(Nature) 그 자체라는 뜻임.' },
+      { anon: '익명2', av: 'rower', text: '니들 다 미쳤냐? 어제 교수님이 칠판 지우실 때 조끼에서 버섯 포자 같은 먼지 구름 피어오르는 거 다 봤는데 무슨 마초이즘이야 보건소 신고감이지!!' },
+      { anon: '익명3', av: 'fencer', text: '우리 지오 주장이 전공 수업 날마다 왜 그렇게 신경질적인지 이제야 알겠네. 안쓰러워라' }
+    ]
+  },
+  {
+    id: 'pf1', cat: 'review', time: '2시간 전', up: 312, down: 8,
+    author: { anon: '익명의 수강생', av: 'student' },
+    title: '[강의평가] 맥 칼란 교수 · POLI 301',
+    prof: { name: '맥 칼란', en: 'Mac Callan', initials: 'MC', dept: '국제정치학', code: 'POLI 301', course: '국제정치와 야생의 권력 (전공필수)', rating: 2, note: '테스토스테론 5.0 / 위생 0.0', nick: '날파리 교수 (Lord of the Flies)' },
+    body: '가슴털이 그리즐리 베어 가죽 수준이고 전완근이 내 허벅지만 한 찐 알파메일 교수님. 사계절 내내 대학원생 때부터 한 번도 안 빨았다는 갈색 가죽 조끼를 맨살 위에 걸치고 오심.\n문제는 마지막 샤워가 클린턴 행정부 시절이었는지 강의실에 들어서면 삭힌 프로틴 파우더 + 젖은 개 + 고대 유적지 곰팡이 냄새가 진동을 함. 어깨 주변에 항상 날파리 세 마리가 위성처럼 공전하고 있음.\n코 막으면 "나약한 소이보이(Soy boy) 새끼!"라고 즉석에서 F 주시니까 입으로만 숨 쉬어야 함. 오피스 아워 때 연구실 소파에 앉으면 바지에 날파리 알 까니까 절대 서서 면담해라.',
+    comments: [
+      { anon: '익명1', av: 'lax', text: '야 그건 악취가 아니라 알파메일의 영역 표시 페로몬이다!! 난 교수님 체취 맡으면서 남성호르몬 충전하려고 맨 앞자리 앉는데?' },
+      { ...GIO, anon: '익명2', text: '브래드 이 미친 새끼야 넌 후각 세포도 근육으로 바뀌었냐? 그 방 영구 폐쇄하고 질병통제예방센터(CDC) 불러야 돼 시발 내가 그 수업 한 번 들어갔다 나오면 코트 드라이클리닝 맡기고 리스테린으로 30분 동안 가글하고 싶어진다고' }
+    ]
+  },
+  {
+    id: 'pf2', cat: 'review', time: '4시간 전', up: 254, down: 5,
+    author: { anon: '익명의 수강생', av: 'student' },
+    title: '[강의평가] 버치 해머 교수 · INTL 402',
+    prof: { name: '버치 해머', en: 'Butch Hammer', initials: 'BH', dept: '외교사 및 협상론', code: 'INTL 402', course: '강대국의 협상 테이블', rating: 1, note: '안구건조증 유발자', nick: '눈싸움 교수' },
+    body: '전직 미 해병대 수색대(USMC Force Recon) 대령 출신. 첫 수업 들어오자마자 "우라(Oorah)!!" 외치면서 교탁을 주먹으로 반 동강 내심.\n"외교란 상대방의 눈알을 먼저 피하게 만드는 기싸움이다"라는 철학을 가지고 계셔서, 3시간 세미나 내내 지목한 학생 한 명이랑 눈도 안 깜빡이고 눈싸움만 하심. 눈 먼저 깜빡이거나 시선 피하면 "협상 결렬! 넌 지옥주(Hell Week) 첫날에 종 치고 도망갈 게이 새끼다!" 소리 지르면서 출석 감점하심.\n수업 끝나면 전원이 인공눈물 넣어야 하는데 안약 넣는 것도 엄살이라고 걸리면 F임.',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '저번 주에 지오반니(Gio)랑 해머 교수님이랑 40분 동안 눈싸움 붙었는데, 지오 형님 눈에서 피눈물 나기 직전까지 안 깜빡여서 교수님이 처음으로 "Semper Fi(영원한 충성)..." 중얼거리며 감동받으심 ㅋㅋㅋ' },
+      { ...GIO, anon: '익명2', text: '감동은 시발 그 노인네가 씹던 씹는담배(Chewing tobacco) 침 튀는 거 피하느라 몸이 얼어붙어서 눈 못 깜빡인 거다 내 각막 돌려내' }
+    ]
+  },
+  {
+    id: 'pf3', cat: 'review', time: '5시간 전', up: 221, down: 9,
+    author: { anon: '익명의 수강생', av: 'lifter' },
+    title: '[강의평가] 렉스 아이언사이드 교수 · ECON 205',
+    prof: { name: '렉스 아이언사이드', en: 'Rex Ironside', initials: 'RI', dept: '거시경제학', code: 'ECON 205', course: '자본주의와 근육의 상관관계', rating: 4, note: '학점 잘 줌, 단 벤치프레스 파운드로 줌', nick: '쇠질 교수' },
+    body: '강의실 교탁 자리에 파워랙이랑 덤벨 세트를 갖다 놓으심. 수업 내내 윗옷 벗고 315파운드(3 Plates) 바벨 컬 하시면서 연준(Fed)의 금리 정책을 설명하시는데, 근육 펌핑이 죽으면 갑자기 수업 중단하고 딥스 100개 조지심.\n중간고사 대체 과제가 \'교수님과 팔씨름해서 3초 버티기\'였음. 참고로 질문할 때 그냥 손 들면 무시당하고 이두근 프론트 더블 바이셉스 포즈를 잡아야 발언권 주심.',
+    comments: [
+      { anon: '익명1', av: 'lax', text: '내 인생 최고의 명강의다. 이 수업 듣고 내 데드리프트 중량이랑 GPA가 동시에 떡상함 ㅋㅋ' },
+      { anon: '익명2', av: 'falcon', text: '경제학 수업인데 칠판에 수요공급 곡선 대신 크레아틴 로딩 주기와 테스토스테론 반감기 그래프만 주구장창 그리심.' }
+    ]
+  },
+  {
+    id: 'pf4', cat: 'review', time: '6시간 전', up: 189, down: 33,
+    author: { anon: '익명의 수강생', av: 'owl' },
+    title: '[강의평가] 세바스찬 보울레르 교수 · LIT 108',
+    prof: { name: '세바스찬 보울레르', en: 'Sebastian Baudelaire', initials: 'SB', dept: '유럽문학사', code: 'LIT 108', course: '19세기 낭만주의 시와 미학 (교양)', rating: 0, note: '수강신청 자체가 사회적 자살행위', nick: '걸어 다니는 게이 함정' },
+    body: '프랑스 소르본에서 초빙되어 온 교수님인데, 실크 스카프 매고 오셔서 얼그레이 티 마시며 나긋나긋한 목소리로 시를 낭독하심.\n문제는 애시컴에서 이 수업을 수강신청하는 순간 캠퍼스 전체에 \'문학 게이\'로 소문나서 사교클럽(Frat) 입회 영구 금지당함. 심지어 라크로스부 애들이 매시간 강의실 창문 밖에서 쌍안경으로 수강생 명단 채증하고 있음.\n교수님은 아무것도 모르고 "아~ 오늘도 예술을 사랑하는 아름다운 청년들이 모였군요~" 하시는데 수강생들 표정은 거의 관타나모 수용소임.',
+    comments: [
+      { ...GIO, anon: '익명1', text: '야 솔직히 이 교수님이 낭독하는 보들레르 원어 발음과 운율 해석은 이 야만인 소굴에서 유일하게 귀가 정화되는 수준... 아 아니 시발 누가 이런 계집애 같은 수업을 듣냐고 나는 강의실 호수 착각해서 3분 앉아있던 거다 오해하지 마라' },
+      { anon: '익명2', av: 'falcon', text: 'ㅋㅋㅋㅋ 익명1 운율 해석 운운하는 거 보니까 맨 앞줄에서 눈 반짝이며 필기하던 놈이네 ㅋㅋㅋ' }
+    ]
+  },
+  {
+    id: 'pf5', cat: 'review', time: '8시간 전', up: 167, down: 3,
+    author: { anon: '익명의 수강생', av: 'ta' },
+    title: '[강의평가] 빅토리아 스틸 교수 · LAW 310',
+    prof: { name: '빅토리아 스틸', en: 'Victoria Steel', initials: 'VS', dept: '국제법', code: 'LAW 310', course: '전쟁법과 제네바 협약', rating: 3, note: '남교수들보다 10배 더 마초 같음', nick: '아이언 레이디 (유일한 여교수)' },
+    body: '캠퍼스에서 남학생들을 제일 가차 없이 조지는 철의 여인. 남학생이 목소리가 작거나, 노트 필기를 색깔 펜으로 예쁘게 하거나, 다리를 꼬고 앉으면 들고 있는 무쇠 지휘봉으로 책상을 내리치며 "애시컴의 사내새끼들이 언제부터 이렇게 스타벅스에서 펌킨 스파이스 라떼나 빨아먹는 프린세스처럼 나약해졌지?!" 하고 호통치심.\n남학생들이 오히려 맥 칼란 교수님보다 스틸 교수님 앞에서 더 바짝 군기 들어있음.',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '어제 어떤 신입생이 재채기할 때 귀여운 소리 냈다가 스틸 교수님한테 법전 모서리로 찍힐 뻔하고 강의실에서 쫓겨남 ㅋㅋㅋㅋ' },
+      { anon: '익명2', av: 'squash', text: '진정한 알파 레이디... 교수님 앞에서는 숨소리도 다스베이더처럼 거칠게 내야 학점 지킨다.' }
+    ]
+  },
+  {
+    id: 'pf6', cat: 'review', time: '어제', up: 238, down: 12,
+    author: { anon: '익명의 수강생', av: 'protein' },
+    title: '[강의평가] 채드 썬더콕 교수 · MED 101',
+    prof: { name: '채드 썬더콕', en: 'Chad Thundercock', initials: 'CT', dept: '스포츠의학', code: 'MED 101', course: '인류의 진화와 테스토스테론', rating: 5, note: '꿀강, 매시간 생고기 시식회 열림', nick: '프로틴 연금술사' },
+    body: '인간의 모든 질병은 남성호르몬 부족 때문이라고 주장하시는 분. 우울증? 스쿼트 부족. 독감? 데드리프트 부족. 심지어 골절도 깁스 대신 날달걀 12알이랑 생간(Raw liver) 씹어 먹으면 자연 치유된다고 가르치심.\n기말고사 문제가 전부 객관식인데 정답이 다 \'4번: 더 무거운 바벨을 든다\' 아니면 \'5번: 스테이크를 핏물째 씹어 삼킨다\'여서 족보가 따로 필요 없음.',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '지난 시간에 교수님이 교탁 위에서 블렌더에 생닭가슴살이랑 케일이랑 에스프레소 6샷 넣고 갈아서 전 수강생한테 종이컵으로 한 잔씩 돌리셨는데, 그거 마시고 안 토한 사람만 A+ 주심.' },
+      { ...GIO, anon: '익명2', text: '나 그날 살모넬라균 감염돼서 죽기 싫어서 복도 화분에 몰래 버렸는데 왜 다음 날 화분 고무나무가 뿌리까지 까맣게 타서 죽어있냐고 시발 그거 생화학 폐기물이지' }
+    ]
+  },
+  {
+    id: 'pf7', cat: 'review', time: '어제', up: 149, down: 7,
+    author: { anon: '익명의 수강생', av: 'warden' },
+    title: '[강의평가] 아서 펜드래곤 교수 · PHIL 204',
+    prof: { name: '아서 펜드래곤', en: 'Arthur Pendragon', initials: 'AP', dept: '정치철학', code: 'PHIL 204', course: '스파르타 국가론', rating: 2, note: '저체온증 걸릴 뻔함', nick: '보일러 파괴자' },
+    body: '"중앙난방은 수컷의 투쟁 본능을 거세한다"며 코네티컷의 1월 혹한기(영하 15도, 블리자드 경보)에도 강의실 창문을 전부 열어젖히고 라디에이터를 파이프 렌치로 잠가버리심.\n패딩이나 목도리 두르고 있으면 나약하다고 강제로 벗게 해서 다들 반팔 티셔츠 하나 입고 입김 뿜으면서 수업 들음. 교수님 본인은 턱수염에 고드름이 주렁주렁 매달린 채로 태연하게 마키아벨리를 강의하심.',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '볼펜 잉크가 얼어서 에세이 작성이 안 된다고 말씀드렸더니, 엄지손가락을 깨물어서 혈서로 제출하라고 하심. 진짜 광기 그 자체.' },
+      { anon: '익명2', av: 'rower', text: '이 수업 들을 땐 몰래 등판에 붙이는 핫팩 10개 도배하고 가야 생존 가능함 (들키면 추위 타는 게이로 낙인찍히니까 목숨 걸고 숨겨야 함).' }
+    ]
+  },
+  {
+    id: 'pf8', cat: 'review', time: '2일 전', up: 206, down: 6,
+    author: { anon: '익명의 수강생', av: 'patrol' },
+    title: '[강의평가] 고든 램파트 교수 · COMM 305',
+    prof: { name: '고든 램파트', en: 'Gordon Rampart', initials: 'GR', dept: '리더십과 수사학', code: 'COMM 305', course: '대중 연설과 지배자의 포효', rating: 3, note: '수업 끝나면 귀에서 이명 들림', nick: '고막 파괴자' },
+    body: '대형 계단식 강의실에서도 마이크를 절대 안 쓰시는데 기본 성량이 제트기 엔진 수준임. 학생들도 프레젠테이션할 때 교탁 앞에 데시벨 측정기를 켜두고 100dB 이하로 말하면 "모기 소리 같은 계집애 발성이다!! 횡격막에 힘 안 줘?!" 하고 그 자리에서 발표자료 찢어버리심.\n그래서 이 수업 발표 날만 되면 건물 밖에서는 무슨 바이킹 약탈선 노 젓는 함성 소리 나는 줄 앎.',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '지오(Gio)가 저번에 발표할 때 귀찮아서 대충 중저음으로 나긋나긋하게 읽다가 교수님한테 걸렸는데, 지오 형님이 빡쳐서 이탈리아어 욕 섞어가며 소리 한 번 버럭 질렀더니 교수님이 "바로 그거다!! 완벽한 로열 알파의 포효다!!" 하고 기립박수 치면서 만점 주심 ㅋㅋㅋㅋ' },
+      { anon: '익명2', av: 'fencer', text: '난 지오가 밤에 귓가에서 나지막하게 속삭여줄 때가 훨씬 더 좋던데. 목소리 톤이 아주 감미롭거든 ;)' }
+    ]
+  },
+  {
+    id: 'pf9', cat: 'review', time: '3일 전', up: 277, down: 24,
+    author: { anon: '익명의 수강생', av: 'queen' },
+    title: '[강의평가] 낸시 누난 교수 · ART 104',
+    prof: { name: '낸시 누난', en: 'Nancy Noonan', initials: 'NN', dept: '현대예술과 복식사', code: 'ART 104', course: '로코코 시대의 레이스와 남성성 (교양선택)', rating: 5, note: '자존심만 버리면 학점 자판기', nick: '확신의 바텀 교수 (The Ultimate Bottom)' },
+    body: '성별은 분명 남자인데 퍼스널 컬러가 베이비 핑크인 교수님. 덩치 큰 운동부 남학생이 강의실 문을 거칠게 열고 들어오거나, 수업 중에 굵은 저음으로 "교수님, 질문 있습니다" 하고 턱을 치켜들면 교수님이 그 자리에서 귀까지 새빨개져서 분필을 떨어뜨리고 교탁 모서리를 붙잡은 채 부들부들 떠심.\n특히 오피스 아워(면담) 때 가서 교수님 연구실 책상이나 벽에 손 한 번 짚고(벽치기) 위에서 내리깔아 보면서 "제 성적에 불만이 있습니다만" 한마디만 하면, 교수님이 눈 질끈 감고 가쁜 숨을 몰아쉬면서 "어머, 그렇게 강압적으로 나오시면... 제, 제가 굴복할 수밖에 없잖아요... A+ 드릴 테니까 살려주세요..." 하고 성적표를 바로 고쳐주심.\n애시컴 최고의 학점 자판기인데, 이 수업 들었다가 \'누난 교수의 알파 남첩\'으로 소문날 수 있으니 목숨 걸고 몰래 수강해야 함.',
+    comments: [
+      { anon: '익명1', av: 'lax', text: '시발 남자가 남자를 보고 왜 얼굴을 붉히냐고!! 난 저번에 학점 정정하러 갔다가 소름 돋아서 연구실 문 부수고 나왔는데, 다음 날 성적표 보니까 "야성적인 파괴력과 수컷의 박력에 감명받았다"면서 A+ 찍혀있음 ㅋㅋㅋㅋ 뭐냐 이거?' },
+      { anon: '익명2', av: 'falcon', text: '이 교수님 연구실 책상 위에 펜싱부 주장 지오반니(Gio) 사진 몰래 액자로 걸어둔 거 본 사람? ㅋㅋㅋ 지오 형님이 수업 시간에 팔짱 끼고 한 번 째려볼 때마다 교수님 거의 호흡곤란 오시던데 ㅋㅋㅋ' },
+      { ...GIO, anon: '익명3', text: '야 이 미친 새끼들아 내 사진이 왜 거기 걸려있어 당장 가서 안 떼와?! 그 인간이 출석 부를 때마다 내 이름을 이상하게 끈적한 콧소리로 불러대서 나 첫 주에 바로 드랍(Drop)했다고 시발 소름 끼치니까 엮지 마라' },
+      { anon: '익명4', av: 'fencer', text: '어머, 누난 교수님이 사람 보는 눈은 아주 정확하시네. 우리 주장이 위에서 내려다볼 때 얼마나 짜릿한데' }
+    ]
+  }
+];
+
+// 피드 노출 순서: 게시판별 글을 섞어서 보여줌
+const SEED_ORDER = [
+  'a1', 'r1', 'p2', 'a2', 'pf1', 'a3', 'p3', 'a4', 'pf2', 'a5', 'p4', 'r3', 'a6', 'pf3', 'a7', 'p6',
+  'pf4', 'a8', 'a9', 'pf5', 'p7', 'a10', 'pf6', 'a11', 'pf7', 'a12', 'pf8', 'a13', 'pf9', 'a14', 'a15'
+];
+const SEED = SEED_ORDER.map(id => [...ALPHA, ...BASE, ...REVIEWS].find(p => p.id === id));
 
 const SEED_NOTIS = [
-  { id: 'n1', icon: 'flame',          text: '[분실물] 펜싱 연습장 탈의실 글이 HOT 게시판에 올랐어요', time: '1시간 전', post: 'p2', read: false },
+  { id: 'n0', icon: 'graduation-cap', text: '수강후기 게시판이 열렸어요. 맥 칼란 교수 강의실 생존 정보를 공유해 주세요', time: '10분 전', cat: 'review', read: false },
+  { id: 'n1', icon: 'flame',         text: '[분실물] 펜싱 연습장 탈의실 글이 HOT 게시판에 올랐어요', time: '1시간 전', post: 'p2', read: false },
   { id: 'n2', icon: 'triangle-alert', text: '마초 자치위원회: 도서관 3층 핸드크림 사건 제보를 받습니다', time: '3시간 전', read: false },
   { id: 'n3', icon: 'trophy',         text: '팰컨 게임 원정 응원 버스 신청이 열렸어요', time: '어제', view: 'campus', read: false },
   { id: 'n4', icon: 'ghost',          text: '펨브로크 홀 귀신 목격담에 새 댓글이 달렸어요', time: '어제', post: 'p4', read: true },
@@ -874,7 +1028,7 @@ const AUTO_REPLIES = [
   { keys: ['왕자', '지오', 'gio', '모나코'], text: '지오 형님 얘기 함부로 하는 거 아니다 브로' }
 ];
 
-const STORE_KEY = 'ashcombe-sidechat-v4';
+const STORE_KEY = 'ashcombe-sidechat-v7';
 const PREVIEW = 2;
 let state = {
   posts: structuredClone(SEED), notis: structuredClone(SEED_NOTIS), votes: {}, polls: {},
@@ -1000,6 +1154,23 @@ function commentHTML(c) {
   </div>`;
 }
 
+function starsHTML(n) {
+  return `<span class="stars" aria-label="별점 ${n}점">${[0, 1, 2, 3, 4].map(i => `<span class="st ${i < n ? 'on' : ''}">${ic('star')}</span>`).join('')}</span>`;
+}
+
+// 수강후기 게시판의 교수 강의평가 카드
+function profHTML(pr) {
+  return `<div class="prof">
+    <div class="prof-head">
+      <span class="prof-ava">${esc(pr.initials)}</span>
+      <div class="prof-name"><b>${esc(pr.name)} 교수</b><small>Prof. ${esc(pr.en)} · ${esc(pr.dept)}</small></div>
+    </div>
+    <div class="prof-course"><span class="code">${esc(pr.code)}</span>${esc(pr.course)}</div>
+    <div class="prof-rate">${starsHTML(pr.rating)}<span>${esc(pr.note)}</span></div>
+    <div class="prof-nick">${ic('tag')}별명: ${esc(pr.nick)}</div>
+  </div>`;
+}
+
 function postHTML(p) {
   const v = state.votes[p.id];
   const open = state.open[p.id];
@@ -1012,7 +1183,8 @@ function postHTML(p) {
         <span class="anon">${esc(p.author.anon)}</span>
         <span>· ${esc(p.time)}</span>
       </div>
-      <h3 class="title">${esc(p.title)}</h3>
+      ${p.prof ? profHTML(p.prof) : `<h3 class="title">${esc(p.title)}</h3>`}
+      ${p.quote ? `<div class="quote">${starsHTML(p.rating)}<span>${esc(p.quote)}</span></div>` : ''}
       <p class="body">${esc(p.body)}</p>
       ${p.poll ? pollHTML(p) : ''}
       <div class="post-foot">
@@ -1269,6 +1441,7 @@ document.querySelector('.app').addEventListener('click', e => {
     n.read = true;
     save();
     if (n.post) openPost(n.post);
+    else if (n.cat) openCat(n.cat);
     else if (n.view) go(n.view);
     else render();
   }
