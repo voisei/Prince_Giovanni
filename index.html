@@ -164,6 +164,7 @@
   .chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--muted); }
   .chip svg.lucide { width: 12px; height: 12px; }
   .title { font-size: 16px; font-weight: 700; line-height: 1.4; }
+  .post-tag { font-size: 11.5px; font-weight: 700; color: var(--navy); letter-spacing: .2px; margin-bottom: 1px; }
   .body { margin-top: 5px; font-size: 14.5px; white-space: pre-wrap; word-break: break-word; }
 
   /* 수강후기: 교수 카드 & 별점 */
@@ -843,17 +844,6 @@ const BASE = [
     ]
   },
   {
-    id: 'p4', cat: 'bamboo', time: '어제 오후 11:45', up: 97, down: 2,
-    author: { anon: '익명의 올빼미', av: 'owl' },
-    title: '펨브로크 홀(옛 음악관) 밤에 진짜 귀신 나오냐?',
-    body: '며칠 전에 밤늦게 그 앞을 지나가다가 이상한 소리 들림. 누구 벽에 쾅 부딪히는 소리랑 좀... 야릇한 숨소리 같은 거? 무서워서 도망쳤는데 거기 밤에 원래 누가 쓰나?',
-    comments: [
-      { anon: '익명1', av: 'falcon', text: '펨브로크 원래 귀신 나옴. 19세기에 피아노 치다 죽은 학생 있다던데' },
-      { anon: '익명2', av: 'fencer', real: '줄리안', text: '귀신은 아닐걸 ;) 숨소리가 꽤 생생했을 텐데' },
-      { ...GIO, anon: '익명3', text: '귀신 맞음. 밤에 가지 마라 진짜로' }
-    ]
-  },
-  {
     id: 'p6', cat: 'prince', time: '6시간 전', up: 154, down: 19,
     author: { anon: '익명의 다이닝홀 알바', av: 'dining' },
     title: '오늘 왕자님 다이닝홀 목격담',
@@ -1016,19 +1006,136 @@ const REVIEWS = [
   }
 ];
 
+// 펨브로크 컨페션 (Ashcombe Confessions)
+const CONFESSIONS = [
+  {
+    id: 'c1', cat: 'bamboo', time: '20분 전', up: 241, down: 9,
+    author: { anon: '익명', av: 'owl' },
+    tag: '#Confession_4081',
+    title: '[죄책감 고백] 마카롱 밀수 사건',
+    body: '어제 뉴욕 그랜드 센트럴 역 근처 프랑스 베이커리에서 라즈베리 마카롱이랑 얼그레이 케이크 사서 기숙사로 밀반입했다. 룸메이트가 라크로스 원정 경기 간 사이에 방문 걸어 잠그고 커튼 다 치고 불 끈 상태에서 이불 뒤집어쓰고 먹었음.\n한 입 베어 무는데 너무 달콤해서 눈물 날 뻔했다. 다 먹고 상자랑 영수증은 지문 남을까 봐 라이터로 태워서 변기에 내려보냄. 나 아직 애시컴의 알파메일 맞겠지...? 신이시여 용서하소서.',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '지금 IP 추적 중이다. 라즈베리 마카롱? 사실상 완전 범죄 실패다 자수해라 ㅋㅋㅋ' },
+      { ...GIO, anon: '익명2', text: '야 그거 크림 브륄레도 파는 그 가게 맞지? 거기 마카롱 꼬끄가 좀 덜 쫀득해졌던데... 아 아니 시발 사내새끼가 설탕 덩어리를 왜 처먹냐 한심한 새끼야' }
+    ]
+  },
+  {
+    id: 'c2', cat: 'bamboo', time: '어제 오후 11:45', up: 388, down: 17,
+    author: { anon: '익명', av: 'watcher' },
+    tag: '#Confession_4082',
+    title: '[목격담] 펨브로크 홀의 심야 괴담',
+    body: "며칠 전 밤 11시 반쯤, 폐쇄된 옛 음악관(펨브로크 홀) 앞을 지나가다가 진짜 기절할 뻔함. 안쪽 복도에서 누가 벽에 '쾅!' 하고 거칠게 밀쳐지는 소리가 나더니, 남자 둘의 거친 숨소리랑 옷자락 스치는 소리가 적막한 건물 안에 다 울리더라.\n누가 밤중에 거기서 비밀 파이트 클럽이라도 여는 줄 알고 문틈으로 살짝 봤는데... 키 크고 금발인 남자(누가 봐도 윈스롭 칼리지 사는 그 로열 패밀리...)가 웬 남자한테 벽치기 당한 채로 고개 젖히고 키스하고 있었음.\n내가 헛것을 본 거냐? 우리 학교 최고의 마초 알파 킹카가 남자의 밑에 깔리는 쪽이었다고??",
+    comments: [
+      { anon: '익명1', av: 'lax', text: 'ㅋㅋㅋㅋ 야 소설을 써라 소설을!! 우리 지오(Gio)가 남한테 벽치기를 당해? 벽을 주먹으로 부수고 있었겠지 병신아 ㅋㅋㅋ 어그로 끌지 마라!' },
+      { ...GIO, anon: '익명2', text: '야 이 눈깔 삐꾸 같은 새끼야 누가 누구 밑에 깔려?! 너 지금 어디 사냐 당장 튀어나와 내가 네 대가리를 벽에 박아주게 시발 그날 어두워서 네가 잘못 본 거라고 내가 위야 아니 키스를 안 했다고!!' },
+      { anon: '익명3', av: 'squash', text: "ㅋㅋㅋㅋㅋ '내가 위야'에서 이미 자백한 거 아니냐고 ㅋㅋㅋㅋㅋ" },
+      { ...GIO, anon: '익명2', deleted: true, text: '' }
+    ]
+  },
+  {
+    id: 'c3', cat: 'bamboo', time: '1시간 전', up: 302, down: 6,
+    author: { anon: '익명', av: 'warden' },
+    tag: '#Confession_4083',
+    title: '[Overheard] 윈스롭 칼리지 세탁실',
+    body: '새벽 3시에 아무도 없을 때 몰래 피치 향 섬유유연제 쓰려고 기숙사 지하 세탁실 내려갔거든? 근데 펜싱부 주장 지오반니가 흰색 앞치마 같은 수건을 두르고 다리미로 자기 셔츠 주름을 0.1mm의 오차도 없이 칼각으로 다리고 있는 거임.\n다 끝나더니 갑자기 그 방금 다린 셔츠를 두 손으로 사정없이 구겨서 바닥에 한 번 패대기친 다음 "휴, 이 정도면 대충 입은 것 같군" 중얼거리고 올라감. 나 지금 뭘 본 거지...?',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: 'ㅋㅋㅋㅋㅋㅋ 진짜 광기다 ㅋㅋㅋㅋ 일부러 구겨 입으려고 먼저 다림질을 한다고??' },
+      { ...GIO, anon: '익명2', text: '다림질이 아니라 셔츠에 붙은 해충을 고온으로 살균 소독한 거다 알지도 못하면 아가리 여물어라' }
+    ]
+  },
+  {
+    id: 'c4', cat: 'bamboo', time: '2시간 전', up: 156, down: 22,
+    author: { anon: '익명', av: 'owl' },
+    tag: '#Confession_4084',
+    title: '[고해성사] 타 대학 여친과의 비밀',
+    body: '나 사실 라이벌 학교인 해리슨 대학교(Harrison Univ) 다니는 여자친구 있음. 근데 여친이 데이트할 때마다 나보고 스킨로션 좀 바르고 수염 좀 깔끔하게 밀고 오라고 해서, 매주 금요일마다 기차 타기 전에 기차역 화장실에서 몰래 폼클렌징으로 세수하고 수분크림 바름.\n그리고 일요일 밤에 애시컴 돌아올 땐 기차 안에서 일부러 창문 열고 미세먼지 맞으면서 얼굴 다시 거칠게 만들고 들어온다. 이중생활 너무 힘들다...',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '해리슨대가 우리 애시컴 알파메일을 소이보이로 세뇌시키고 있네!! 당장 헤어져라 이건 애교가 아니라 적국의 심리전이다!!' },
+      { anon: '익명2', av: 'rower', text: '수분크림 바른 시점에서 이미 넌 팰컨 게임(연례 대항전) 응원석에 앉을 자격 박탈임.' }
+    ]
+  },
+  {
+    id: 'c5', cat: 'bamboo', time: '3시간 전', up: 274, down: 11,
+    author: { anon: '익명', av: 'watcher' },
+    tag: '#Confession_4085',
+    title: '[제보] The Ninth Lantern 탭 나이트 목격담',
+    body: "지난 봄 '탭 나이트(Tap Night)' 때 창문 없는 무덤 건물 뒤편에서 비밀결사 신입 회원 신고식 하는 거 몰래 봤는데, 검은 로브 입은 선배들이 3학년 신입들한테 생마늘 30쪽이랑 날달걀 10개 껍질째 씹어 삼키게 하더라.\n그게 세계를 움직이는 엘리트 네트워크의 의식이냐 아니면 그냥 식중독 챌린지냐?",
+    comments: [
+      { ...GIO, anon: '익명1', text: '그 미개한 의식 만든 초대 설립자 무덤 파버리고 싶다 진짜... 나 그날 달걀 껍질 안 삼키고 손수건에 몰래 뱉느라 죽는 줄 알았네' },
+      { anon: '익명2', av: 'lax', text: '야 익명1 이 자식아 비밀결사 수칙 제1조가 발설 금지인데 여기서 다 불면 어떡하냐!! 너 누군지 다 안다 ㅋㅋ' }
+    ]
+  },
+  {
+    id: 'c6', cat: 'bamboo', time: '4시간 전', up: 319, down: 28,
+    author: { anon: '익명', av: 'queen' },
+    tag: '#Confession_4086',
+    title: '[가십] 클로이 밴더빌트의 굴욕',
+    body: '어제 사교클럽 갈라 파티에서 클로이 밴더빌트가 가슴 파인 드레스 입고 지오반니 팔짱 끼려고 다가갔는데, 지오가 자기 코트 소매에 클로이 향수 냄새 배는 거 싫다고 옆에 있던 1학년(요즘 지오가 맨날 쫓아다니면서 괴롭히는 그 애) 방패막이로 세우고 도망가는 거 본 사람?\n클로이 표정 완전 썩어들어가던데 ㅋㅋㅋ 요즘 지오 눈길이 온통 그 애한테만 꽂혀 있던데 둘이 진짜 무슨 사이임?',
+    comments: [
+      { anon: '익명1', av: 'queen', text: '도망간 게 아니라 지오가 나한테 샴페인 가져다주려고 자리 비운 거거든? 그리고 그 근본도 없는 애랑 모나코 왕자가 엮일 리가 없잖아. 수준 떨어지게 가십 만들지 마.' },
+      { anon: '익명2', av: 'fencer', text: '글쎄, 우리 주장이 원래 한 번 꽂히면 꽤 집요한 편인데. 이번엔 꽤 재밌는 장난감을 찾은 모양이네 ;)' }
+    ]
+  },
+  {
+    id: 'c7', cat: 'bamboo', time: '5시간 전', up: 198, down: 5,
+    author: { anon: '익명', av: 'lifter' },
+    tag: '#Confession_4087',
+    title: '[고백] 나의 은밀한 플레이리스트',
+    body: "헬스장에서 3대 500파운드 칠 때 에어팟 끼고 인상을 쓰며 헤비메탈 듣는 척하지만... 사실 내 플레이리스트는 전부 테일러 스위프트(Taylor Swift)랑 라나 델 레이(Lana Del Rey), 그리고 쇼팽 녹턴이다.\n'Shake It Off' 후렴구 나올 때 데드리프트 당기면 중량이 평소보다 20파운드 더 올라감. 만약 운동하다가 블루투스 연결 끊겨서 체육관 전체에 테일러 스위프트 노래 울려 퍼지면 난 그 자리에서 바벨 밑에 목 넣고 자결할 거다.",
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '브로... 실망이다. 헬스장 브금은 오직 쇠 부딪히는 소리뿐이어야 한다.' },
+      { anon: '익명2', av: 'squash', text: '나도 사실 스쿼트 할 때 디즈니 OST(Let It Go) 들음... 비밀 지켜주자 형제여.' }
+    ]
+  },
+  {
+    id: 'c8', cat: 'bamboo', time: '7시간 전', up: 227, down: 8,
+    author: { anon: '익명', av: 'patrol' },
+    tag: '#Confession_4088',
+    title: '[경고] 기숙사 샤워실 바디워시 사건',
+    body: "올드 쿼드 기숙사 2층 샤워실에 누가 '체리블라썸 바디워시'랑 '레이스 달린 샤워볼' 놓고 갔냐? 사내새끼는 머리부터 발끝까지 차가운 빨래비누(Dial 비누) 하나로 30초 만에 끝내는 거다.\n거품 내서 몸 문지르는 놈 색출해서 올드 쿼드 분수대에 입수시킨다.",
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '어제 그 샤워실 마지막으로 쓴 사람 라크로스부 주장 브래드 아님?? ㅋㅋㅋㅋ' },
+      { anon: '익명2', av: 'lax', text: '야 이 개새끼야 난 거품 안 냈어!! 그냥 통이 빨간색이길래 고추기름이나 불닭소스 같은 상남자 세정제인 줄 알고 머리에 부은 거다!! 왜 내 머리에서 벚꽃 냄새가 안 빠지냐고 시발!!' }
+    ]
+  },
+  {
+    id: 'c9', cat: 'bamboo', time: '어제', up: 412, down: 14,
+    author: { anon: '익명', av: 'dining' },
+    tag: '#Confession_4089',
+    title: '[목격담] 대학가 24시 다이너의 기적',
+    body: '새벽 2시에 시험공부하다가 배고파서 다이너 갔는데, 구석 부스에서 지오반니가 그 애(요즘 지오랑 맨날 붙어 다니는 애) 앞에 앉아서 팬케이크 시럽을 대신 뿌려주고 있었음. 심지어 포크랑 나이프도 지오가 자기 손수건으로 열 번 넘게 박박 닦아서 쥐여주던데?\n그 애가 "너 게이냐?" 하고 한마디 툭 던지니까 지오 얼굴 시뻘게져서 테이블 치고 쌍욕 박으면서도 끝까지 옆자리 안 떠나더라 ㅋㅋㅋㅋ 이거 혐관 로맨스 맞지?',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '지오 형님이 남의 포크를 닦아줬다고?? 미쳤네 ㅋㅋㅋ 약점 제대로 잡힌 듯.' },
+      { ...GIO, anon: '익명2', text: '그 식당 식기세척기 수온이 기준치 미달이라 위생 상태가 엉망이어서 내 눈앞에서 식중독 걸려 뒤질까 봐 닦아준 거다 개소리 한 번만 더 지껄이면 다이너 간판 떼서 네 입에 처박아주마' }
+    ]
+  },
+  {
+    id: 'c10', cat: 'bamboo', time: '2일 전', up: 286, down: 3,
+    author: { anon: '익명', av: 'freshman' },
+    tag: '#Confession_4090',
+    title: '[고백] 프로스트 볼 파트너 구함',
+    body: '12월 블랙타이 무도회 \'프로스트 볼(Frost Ball)\' 다가오는데 아직도 파트너 못 구했다... 솔직히 여자한테 말 거는 것보다 렉스 교수님 앞에서 벤치프레스 300파운드 드는 게 백 배는 더 쉬움.\n여자 앞에만 서면 마초 연기하느라 "어이, 거기 암컷. 나랑 스테이크나 뜯으러 갈까?" 이 지랄하게 돼서 차인 게 벌써 다섯 번째다. 나 어떡하냐?',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: "'어이 거기 암컷' ㅋㅋㅋㅋㅋㅋㅋㅋ 내 배꼽 돌려내라 미친놈아 ㅋㅋㅋㅋㅋ" },
+      { anon: '익명2', av: 'rower', text: '애시컴 마초 교육의 최대 피해자 여기 추가요 ㅋㅋㅋㅋ 그냥 브로들끼리 턱시도 입고 가서 단백질 쉐이크로 건배해라.' }
+    ]
+  }
+];
+
 // 피드 노출 순서: 게시판별 글을 섞어서 보여줌
 const SEED_ORDER = [
-  'a1', 'r1', 'p2', 'a2', 'pf10', 'pf1', 'a3', 'p3', 'a4', 'pf2', 'a5', 'p4', 'r3', 'a6', 'pf3', 'a7', 'p6',
-  'pf4', 'a8', 'a9', 'pf5', 'p7', 'a10', 'pf6', 'a11', 'pf7', 'a12', 'pf8', 'a13', 'pf9', 'a14', 'a15'
+  'a1', 'c1', 'r1', 'p2', 'a2', 'pf10', 'c2', 'pf1', 'a3', 'p3', 'c3', 'a4', 'pf2', 'a5', 'c4', 'r3', 'a6', 'pf3',
+  'c5', 'a7', 'p6', 'c6', 'pf4', 'a8', 'c7', 'a9', 'pf5', 'p7', 'c8', 'a10', 'pf6', 'a11', 'c9', 'pf7', 'a12',
+  'pf8', 'c10', 'a13', 'pf9', 'a14', 'a15'
 ];
-const SEED = SEED_ORDER.map(id => [...ALPHA, ...BASE, ...REVIEWS].find(p => p.id === id));
+const SEED = SEED_ORDER.map(id => [...ALPHA, ...BASE, ...REVIEWS, ...CONFESSIONS].find(p => p.id === id));
 
 const SEED_NOTIS = [
   { id: 'n0', icon: 'graduation-cap', text: '수강후기 게시판이 열렸어요. 맥 칼란 교수 강의실 생존 정보를 공유해 주세요', time: '10분 전', cat: 'review', read: false },
   { id: 'n1', icon: 'flame',         text: '[분실물] 펜싱 연습장 탈의실 글이 HOT 게시판에 올랐어요', time: '1시간 전', post: 'p2', read: false },
   { id: 'n2', icon: 'triangle-alert', text: '마초 자치위원회: 도서관 3층 핸드크림 사건 제보를 받습니다', time: '3시간 전', read: false },
   { id: 'n3', icon: 'trophy',         text: '팰컨 게임 원정 응원 버스 신청이 열렸어요', time: '어제', view: 'campus', read: false },
-  { id: 'n4', icon: 'ghost',          text: '펨브로크 홀 귀신 목격담에 새 댓글이 달렸어요', time: '어제', post: 'p4', read: true },
+  { id: 'n4', icon: 'ghost',          text: '펨브로크 홀 심야 괴담 글에 새 댓글이 달렸어요', time: '어제', post: 'c2', read: true },
   { id: 'n5', icon: 'snowflake',      text: '프로스트 볼 티켓 판매가 곧 시작돼요. 블랙타이 필수', time: '2일 전', view: 'campus', read: true }
 ];
 
@@ -1041,7 +1148,7 @@ const AUTO_REPLIES = [
   { keys: ['왕자', '지오', 'gio', '모나코'], text: '지오 형님 얘기 함부로 하는 거 아니다 브로' }
 ];
 
-const STORE_KEY = 'ashcombe-sidechat-v9';
+const STORE_KEY = 'ashcombe-sidechat-v10';
 const PREVIEW = 2;
 let state = {
   posts: structuredClone(SEED), notis: structuredClone(SEED_NOTIS), votes: {}, polls: {},
@@ -1196,6 +1303,7 @@ function postHTML(p) {
         <span class="anon">${esc(p.author.anon)}</span>
         <span>· ${esc(p.time)}</span>
       </div>
+      ${p.tag ? `<div class="post-tag">${esc(p.tag)}</div>` : ''}
       ${p.prof ? profHTML(p.prof) : `<h3 class="title">${esc(p.title)}</h3>`}
       ${p.quote ? `<div class="quote">${starsHTML(p.rating)}<span>${esc(p.quote)}</span></div>` : ''}
       <p class="body">${esc(p.body)}</p>
