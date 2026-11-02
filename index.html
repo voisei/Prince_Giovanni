@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Ashcombe Sidechat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<style>
+  :root {
+    --navy: #0F2C59;
+    --header: #0F2C59;
+    --crimson: #8B0000;
+    --gold: #C5A059;
+    --green: #1F4D3A;
+    --bg: #F8F6F0;
+    --outside: #E4E0D5;
+    --card: #FFFFFF;
+    --text: #1A1A1A;
+    --muted: #666666;
+    --line: #ECE7DC;
+    --soft: #F3EFE6;
+    --up: #C2410C;
+    --down: #3B6EA8;
+    --shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  body[data-theme="lantern"] {
+    --navy: #9DB8EA;
+    --header: #050B18;
+    --crimson: #D9534F;
+    --gold: #D8B36A;
+    --green: #6FB592;
+    --bg: #0B0F17;
+    --outside: #05070B;
+    --card: #141A26;
+    --text: #ECE8DF;
+    --muted: #9AA0AB;
+    --line: #232C3D;
+    --soft: #1B2333;
+    --up: #F08A4B;
+    --down: #7FA8E0;
+    --shadow: 0 2px 10px rgba(0,0,0,0.4);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { background: var(--outside); }
+  body {
+    color: var(--text);
+    font-family: "Noto Sans KR", -apple-system, "Apple SD Gothic Neo", sans-serif;
+    font-size: 15px; line-height: 1.55;
+  }
+  button, input, textarea, select { font: inherit; color: inherit; }
+  button { cursor: pointer; background: none; border: none; text-align: inherit; }
+  svg.lucide { width: 18px; height: 18px; stroke-width: 2; flex-shrink: 0; }
+  [hidden] { display: none !important; }
+
+  /* 앱 프레임: 항상 모바일 폭 */
+  .app {
+    position: relative; max-width: 430px; min-height: 100vh; margin: 0 auto;
+    background: var(--bg); padding-bottom: 96px; box-shadow: 0 0 40px rgba(0,0,0,.08);
+  }
+
+  /* ---------- 상단 앱바 ---------- */
+  .appbar { position: sticky; top: 0; z-index: 20; background: var(--header); color: #fff; padding: 12px 16px; }
+  .appbar-row { display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-family: "Cinzel", serif; font-size: 19px; font-weight: 700; letter-spacing: .4px; line-height: 1.1; }
+  .logo small { display: block; font-family: "Noto Sans KR", sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0; color: var(--gold); margin-top: 3px; }
+  .icon-btn {
+    width: 38px; height: 38px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+    color: #fff; background: rgba(255,255,255,.1);
+  }
+  .icon-btn[aria-pressed="true"] { background: var(--gold); color: #0F2C59; }
+  .appbar-actions { display: flex; gap: 8px; }
+  .search {
+    margin-top: 12px; display: flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,.12); border-radius: 10px; padding: 9px 12px; color: rgba(255,255,255,.7);
+  }
+  .search input { flex: 1; min-width: 0; background: none; border: none; outline: none; color: #fff; }
+  .search input::placeholder { color: rgba(255,255,255,.55); }
+
+  /* ---------- 공통 섹션 ---------- */
+  .view-head { padding: 18px 16px 4px; }
+  .view-head h2 { font-size: 20px; font-weight: 700; }
+  .view-head p { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .sec { padding: 14px 16px 0; }
+  .sec-title { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .sec-title svg.lucide { width: 16px; height: 16px; color: var(--gold); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); }
+  .row {
+    display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 14px; border-bottom: 1px solid var(--line);
+  }
+  .row:last-child { border-bottom: none; }
+  .row-icon {
+    width: 38px; height: 38px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center;
+    background: var(--soft); color: var(--navy); flex-shrink: 0;
+  }
+  .row-main { flex: 1; min-width: 0; }
+  .row-main b { display: block; font-size: 14px; }
+  .row-main span { display: block; font-size: 12.5px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .row-side { font-size: 12px; color: var(--muted); display: inline-flex; align-items: center; gap: 2px; }
+  .row-side svg.lucide { width: 16px; height: 16px; }
+
+  /* ---------- 경보 배너 ---------- */
+  .banner {
+    margin: 14px 16px 0; background: var(--crimson); color: #fff; border-radius: 12px; padding: 12px 14px;
+    display: flex; gap: 10px; box-shadow: var(--shadow);
+  }
+  .banner svg.lucide { width: 20px; height: 20px; margin-top: 1px; }
+  .banner strong { display: block; font-size: 13px; }
+  .banner p { font-size: 12.5px; opacity: .95; margin-top: 2px; }
+  .banner small { display: block; font-size: 11px; opacity: .7; margin-top: 4px; }
+
+  /* ---------- 카테고리 탭 ---------- */
+  .tabs { display: flex; gap: 8px; overflow-x: auto; padding: 14px 16px 2px; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 999px;
+    padding: 8px 13px; font-size: 13px; font-weight: 500; color: var(--muted);
+  }
+  .tab svg.lucide { width: 15px; height: 15px; }
+  .tab[aria-selected="true"] { background: var(--navy); border-color: var(--navy); color: var(--bg); font-weight: 700; }
+
+  /* ---------- 위젯 캐러셀 ---------- */
+  .widgets { display: flex; gap: 10px; overflow-x: auto; padding: 12px 16px 4px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .widgets::-webkit-scrollbar { display: none; }
+  .widget {
+    flex: 0 0 82%; scroll-snap-align: start; background: var(--card); border: 1px solid var(--line);
+    border-radius: 12px; padding: 13px 14px; box-shadow: var(--shadow);
+  }
+  .widget h4 { display: flex; align-items: center; gap: 6px; font-size: 13.5px; margin-bottom: 8px; }
+  .widget h4 svg.lucide { width: 16px; height: 16px; color: var(--gold); }
+  .rank { list-style: none; }
+  .rank li { display: flex; align-items: center; gap: 10px; padding: 4px 0; font-size: 13px; }
+  .rank .n { width: 20px; height: 20px; border-radius: 6px; background: var(--soft); display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; }
+  .rank li:first-child .n { background: var(--gold); color: #0F2C59; }
+  .rank .who { flex: 1; }
+  .rank .who small { color: var(--muted); font-size: 11px; margin-left: 4px; }
+  .rank .pts { font-weight: 700; color: var(--crimson); font-size: 12px; }
+  .trends { display: flex; flex-wrap: wrap; gap: 6px; }
+  .trend { background: var(--soft); border: 1px solid var(--line); border-radius: 999px; padding: 5px 10px; font-size: 12px; color: var(--navy); }
+  .plain { list-style: none; font-size: 13px; }
+  .plain li { padding: 3px 0; display: flex; justify-content: space-between; gap: 8px; }
+  .plain li span:last-child { color: var(--muted); flex-shrink: 0; }
+
+  /* ---------- 피드 ---------- */
+  .feed { padding: 12px 16px 0; }
+  .post {
+    display: flex; gap: 10px; background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; padding: 14px 12px 12px 14px; margin-bottom: 12px; box-shadow: var(--shadow);
+    scroll-margin-top: 140px;
+  }
+  .post.flash { animation: flash 1.4s ease; }
+  @keyframes flash { 0%, 40% { box-shadow: 0 0 0 3px var(--gold); } 100% { box-shadow: var(--shadow); } }
+  .post-main { flex: 1; min-width: 0; }
+  .meta { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); margin-bottom: 8px; flex-wrap: wrap; }
+  .avatar {
+    width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+    color: #fff; flex-shrink: 0;
+  }
+  .avatar svg.lucide { width: 16px; height: 16px; }
+  .anon { font-weight: 700; color: var(--text); font-size: 13px; }
+  .chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--muted); }
+  .chip svg.lucide { width: 12px; height: 12px; }
+  .title { font-size: 16px; font-weight: 700; line-height: 1.4; }
+  .body { margin-top: 5px; font-size: 14.5px; white-space: pre-wrap; word-break: break-word; }
+
+  .votes { display: flex; flex-direction: column; align-items: center; gap: 2px; width: 40px; flex-shrink: 0; }
+  .vote { width: 36px; height: 34px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; color: var(--muted); }
+  .vote svg.lucide { width: 22px; height: 22px; }
+  .vote.up.on { color: var(--up); }
+  .vote.up.on svg { fill: var(--up); }
+  .vote.down.on { color: var(--down); }
+  .vote.down.on svg { fill: var(--down); }
+  .score { font-weight: 700; font-size: 14px; }
+  .score.up { color: var(--up); }
+  .score.down { color: var(--down); }
+
+  .poll { margin-top: 12px; border: 1px solid var(--line); border-radius: 10px; padding: 11px; }
+  .poll-q { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .poll-q svg.lucide { width: 15px; height: 15px; color: var(--gold); }
+  .poll-opt {
+    position: relative; display: block; width: 100%; text-align: left; margin-top: 6px;
+    background: var(--soft); border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; font-size: 13px; overflow: hidden;
+  }
+  .poll-opt[disabled] { cursor: default; }
+  .poll-opt .bar { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--gold); opacity: .32; transition: width .6s ease; }
+  .poll-opt .txt { position: relative; display: flex; justify-content: space-between; gap: 10px; }
+  .poll-opt.mine { border-color: var(--gold); font-weight: 700; }
+  .poll-total { font-size: 11px; color: var(--muted); margin-top: 6px; }
+
+  .post-foot { display: flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 12.5px; color: var(--muted); }
+  .post-foot svg.lucide { width: 15px; height: 15px; }
+
+  .comments { margin-top: 8px; border-top: 1px solid var(--line); }
+  .c { display: flex; gap: 8px; padding: 10px 0 8px; border-bottom: 1px solid var(--line); }
+  .c:last-child { border-bottom: none; }
+  .c .avatar { width: 24px; height: 24px; }
+  .c .avatar svg.lucide { width: 13px; height: 13px; }
+  .c-main { flex: 1; min-width: 0; }
+  .c-head { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; font-size: 12.5px; font-weight: 700; }
+  .c-text { font-size: 14px; margin-top: 2px; word-break: break-word; }
+  .c.deleted .c-text { color: var(--muted); font-style: italic; }
+  .c.new { animation: pop .6s ease; }
+  @keyframes pop { from { background: var(--soft); } to { background: transparent; } }
+  .more { display: inline-flex; align-items: center; gap: 4px; font-size: 12.5px; font-weight: 700; color: var(--navy); padding: 8px 0 2px; }
+  .more svg.lucide { width: 15px; height: 15px; transition: transform .2s; }
+  .more.open svg.lucide { transform: rotate(180deg); }
+  .cform { display: flex; gap: 6px; margin-top: 8px; }
+  .cform input {
+    flex: 1; min-width: 0; background: var(--soft); border: 1px solid var(--line); border-radius: 999px;
+    padding: 9px 14px; outline: none; font-size: 14px;
+  }
+  .cform input:focus { border-color: var(--navy); }
+  .cform button {
+    width: 40px; height: 40px; border-radius: 50%; background: var(--navy); color: var(--bg);
+    display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .cform button svg.lucide { width: 17px; height: 17px; }
+  .empty { text-align: center; color: var(--muted); padding: 40px 16px; font-size: 14px; }
+  .empty svg.lucide { width: 32px; height: 32px; margin-bottom: 8px; opacity: .6; }
+
+  /* ---------- 게시판 ---------- */
+  .board-card { display: flex; gap: 12px; align-items: flex-start; width: 100%; padding: 14px; margin-bottom: 10px; }
+  .board-card .row-icon { width: 44px; height: 44px; border-radius: 12px; color: #fff; }
+  .board-card .row-icon svg.lucide { width: 22px; height: 22px; }
+  .board-card .desc { font-size: 12.5px; color: var(--muted); margin-top: 1px; }
+  .board-card .latest { font-size: 12.5px; margin-top: 6px; display: flex; gap: 4px; align-items: center; color: var(--text); }
+  .board-card .latest svg.lucide { width: 13px; height: 13px; color: var(--muted); }
+  .board-card .latest span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .count { font-size: 11px; font-weight: 700; background: var(--soft); color: var(--muted); padding: 2px 8px; border-radius: 999px; margin-left: 6px; }
+  .hot-n { width: 24px; text-align: center; font-weight: 700; color: var(--crimson); font-size: 15px; flex-shrink: 0; }
+
+  /* ---------- 캠퍼스 ---------- */
+  .crest {
+    margin: 14px 16px 0; padding: 22px 18px; border-radius: 16px; color: #fff; text-align: center;
+    background: linear-gradient(160deg, #1F4D3A 0%, #0F2C59 100%); box-shadow: var(--shadow); position: relative; overflow: hidden;
+  }
+  .crest::after {
+    content: ""; position: absolute; inset: 8px; border: 1px solid rgba(197,160,89,.45); border-radius: 12px; pointer-events: none;
+  }
+  .crest .seal {
+    width: 56px; height: 56px; border-radius: 50%; margin: 0 auto 10px; background: rgba(197,160,89,.18);
+    border: 1.5px solid #C5A059; color: #C5A059; display: flex; align-items: center; justify-content: center;
+  }
+  .crest .seal svg.lucide { width: 28px; height: 28px; }
+  .crest h3 { font-family: "Cinzel", serif; font-size: 20px; letter-spacing: 1px; }
+  .crest .motto { font-family: "Cinzel", serif; font-size: 12px; color: #C5A059; margin-top: 4px; letter-spacing: .5px; }
+  .crest .est { font-size: 12px; opacity: .8; margin-top: 6px; }
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat { padding: 12px; }
+  .stat small { display: flex; align-items: center; gap: 4px; font-size: 11.5px; color: var(--muted); }
+  .stat small svg.lucide { width: 13px; height: 13px; }
+  .stat b { display: block; font-size: 17px; margin-top: 2px; }
+  .swatch { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 2px; }
+  .sem { font-size: 12px; font-weight: 700; color: var(--muted); padding: 12px 14px 4px; }
+  .event { display: flex; gap: 12px; padding: 10px 14px; position: relative; }
+  .event .when { width: 62px; flex-shrink: 0; font-size: 12px; font-weight: 700; color: var(--navy); padding-top: 2px; }
+  .event .ev-icon {
+    width: 30px; height: 30px; border-radius: 50%; background: var(--soft); color: var(--navy);
+    display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .event .ev-icon svg.lucide { width: 15px; height: 15px; }
+  .event b { display: block; font-size: 14px; }
+  .event span { display: block; font-size: 12.5px; color: var(--muted); white-space: normal; }
+  .event.now { background: var(--soft); }
+  .event.now .ev-icon { background: var(--gold); color: #0F2C59; }
+  .event .now-badge { display: inline-block; font-size: 10px; font-weight: 700; background: var(--crimson); color: #fff; border-radius: 4px; padding: 1px 5px; margin-left: 4px; vertical-align: 1px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips span { font-size: 12.5px; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; }
+  .rules { list-style: none; counter-reset: rule; padding: 4px 14px; }
+  .rules li { counter-increment: rule; display: flex; gap: 10px; padding: 9px 0; font-size: 13.5px; border-bottom: 1px solid var(--line); }
+  .rules li:last-child { border-bottom: none; }
+  .rules li::before {
+    content: "제" counter(rule) "조"; flex-shrink: 0; font-size: 11px; font-weight: 700; color: var(--crimson);
+    background: var(--soft); border-radius: 6px; padding: 2px 6px; height: fit-content; margin-top: 1px;
+  }
+  .lantern-card { padding: 14px; display: flex; gap: 12px; align-items: flex-start; }
+  .lantern-card p { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+  /* ---------- 알림 ---------- */
+  .noti { display: flex; gap: 12px; width: 100%; padding: 13px 14px; border-bottom: 1px solid var(--line); position: relative; }
+  .noti:last-child { border-bottom: none; }
+  .noti.unread { background: color-mix(in srgb, var(--gold) 10%, transparent); }
+  .noti.unread::after { content: ""; position: absolute; top: 18px; right: 14px; width: 8px; height: 8px; border-radius: 50%; background: var(--crimson); }
+  .noti .row-main span { white-space: normal; }
+  .noti .txt { font-size: 13.5px; padding-right: 14px; }
+  .link-btn { font-size: 12.5px; font-weight: 700; color: var(--navy); display: inline-flex; align-items: center; gap: 4px; }
+  .link-btn svg.lucide { width: 14px; height: 14px; }
+
+  /* ---------- MY ---------- */
+  .profile { margin: 14px 16px 0; padding: 18px; display: flex; gap: 14px; align-items: center; }
+  .profile .avatar { width: 56px; height: 56px; }
+  .profile .avatar svg.lucide { width: 28px; height: 28px; }
+  .profile b { display: block; font-size: 17px; }
+  .verified { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: var(--green); font-weight: 700; margin-top: 2px; }
+  .verified svg.lucide { width: 14px; height: 14px; }
+  .profile .sub { font-size: 12.5px; color: var(--muted); }
+  .my-stats { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; }
+  .my-stats div { padding: 14px 4px; border-right: 1px solid var(--line); }
+  .my-stats div:last-child { border-right: none; }
+  .my-stats b { display: block; font-size: 18px; }
+  .my-stats small { font-size: 11.5px; color: var(--muted); }
+  .switch {
+    width: 46px; height: 28px; border-radius: 999px; background: var(--line); position: relative; flex-shrink: 0; transition: background .2s;
+  }
+  .switch::after {
+    content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform .2s;
+  }
+  .switch[aria-checked="true"] { background: var(--navy); }
+  .switch[aria-checked="true"]::after { transform: translateX(18px); }
+  .danger { color: var(--crimson); }
+  .danger .row-icon { color: var(--crimson); }
+
+  /* ---------- 하단 탭바 & FAB ---------- */
+  .tabbar {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; z-index: 30;
+    display: flex; justify-content: space-around; background: var(--card); border-top: 1px solid var(--line);
+    padding: 8px 0 calc(10px + env(safe-area-inset-bottom));
+  }
+  .tabbar button { position: relative; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10.5px; color: var(--muted); min-width: 56px; }
+  .tabbar button svg.lucide { width: 22px; height: 22px; }
+  .tabbar button.on { color: var(--navy); font-weight: 700; }
+  .badge {
+    position: absolute; top: -4px; left: calc(50% + 6px); min-width: 17px; height: 17px; padding: 0 4px; border-radius: 999px;
+    background: var(--crimson); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+  }
+  .fab-wrap { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; height: 0; z-index: 31; }
+  .fab {
+    position: absolute; right: 16px; bottom: 86px; width: 56px; height: 56px; border-radius: 50%;
+    background: var(--crimson); color: #fff; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 18px rgba(139,0,0,.35);
+  }
+  .fab svg.lucide { width: 24px; height: 24px; }
+
+  /* ---------- 글쓰기 시트 ---------- */
+  dialog {
+    border: none; padding: 0; width: 100%; max-width: 430px; margin: auto auto 0; border-radius: 18px 18px 0 0;
+    background: var(--card); color: var(--text); max-height: 90vh;
+  }
+  dialog[open] { animation: up .25s ease; }
+  @keyframes up { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+  dialog::backdrop { background: rgba(10,15,30,.55); }
+  .sheet-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--line); font-weight: 700; }
+  .sheet-head button { width: 34px; height: 34px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: var(--muted); }
+  .sheet-body { padding: 14px 16px 22px; display: flex; flex-direction: column; gap: 8px; }
+  .sheet-body label { font-size: 12px; font-weight: 700; color: var(--muted); margin-top: 4px; }
+  .sheet-body input, .sheet-body textarea, .sheet-body select {
+    width: 100%; background: var(--soft); border: 1px solid var(--line); border-radius: 10px; padding: 11px 12px; outline: none; font-size: 15px;
+  }
+  .sheet-body textarea { min-height: 120px; resize: vertical; }
+  .submit {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    background: var(--crimson); color: #fff; border-radius: 12px; padding: 13px; font-weight: 700; margin-top: 8px;
+  }
+
+  /* ---------- 토스트 ---------- */
+  .toast {
+    position: fixed; left: 50%; bottom: 100px; transform: translate(-50%, 16px);
+    display: flex; align-items: center; gap: 8px; max-width: calc(min(430px, 100%) - 32px);
+    background: #1A1A1A; color: #fff; padding: 10px 16px; border-radius: 999px; font-size: 13px;
+    opacity: 0; pointer-events: none; transition: all .25s; z-index: 50;
+  }
+  .toast svg.lucide { width: 16px; height: 16px; color: var(--gold); }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="appbar">
+    <div class="appbar-row">
+      <div class="logo">Ashcombe<small>Sidechat · 재학생 익명 커뮤니티</small></div>
+      <div class="appbar-actions">
+        <button class="icon-btn" id="lanternBtn" aria-pressed="false" aria-label="랜턴 모드"><i data-lucide="moon"></i></button>
+      </div>
+    </div>
+    <label class="search" id="searchBar"><i data-lucide="search"></i><input id="search" type="search" placeholder="가십 검색" aria-label="게시글 검색"></label>
+  </header>
+
+  <!-- ===== 홈 ===== -->
+  <section id="view-home">
+    <div class="banner">
+      <i data-lucide="triangle-alert"></i>
+      <div>
+        <strong>캠퍼스 풍기문란 경보</strong>
+        <p>어제 중앙 도서관 3층에서 '복숭아 향 핸드크림'을 바른 남학생이 목격되었습니다. 자수하십시오. 애시컴의 명예가 실추되고 있습니다.</p>
+        <small>애시컴 마초 자치위원회</small>
+      </div>
+    </div>
+
+    <nav class="tabs" id="tabs" role="tablist"></nav>
+
+    <div class="widgets">
+      <div class="widget">
+        <h4><i data-lucide="trophy"></i>이달의 테토남 랭킹</h4>
+        <ol class="rank">
+          <li><span class="n">1</span><span class="who">Giovanni<small>펜싱부 주장</small></span><span class="pts">9,821 T</span></li>
+          <li><span class="n">2</span><span class="who">Brad<small>라크로스부 주장</small></span><span class="pts">9,540 T</span></li>
+          <li><span class="n">3</span><span class="who">Julian<small>펜싱부</small></span><span class="pts">7,212 T</span></li>
+          <li><span class="n">4</span><span class="who">우산 쓴 놈<small>신원 미상</small></span><span class="pts">-404 T</span></li>
+        </ol>
+      </div>
+      <div class="widget">
+        <h4><i data-lucide="trending-up"></i>실시간 트렌드</h4>
+        <div class="trends">
+          <button class="trend" data-q="우산">#비오는데_우산쓴놈_누구냐</button>
+          <button class="trend" data-q="캐시미어">#핑크캐시미어_범인</button>
+          <button class="trend" data-q="펨브로크">#펨브로크홀_밀회</button>
+          <button class="trend" data-q="빨대">#빨대_사용자_색출</button>
+          <button class="trend" data-q="고양이">#고양이_우쭈쭈_범인</button>
+          <button class="trend" data-q="프로스트">#프로스트볼_파트너</button>
+        </div>
+      </div>
+      <div class="widget">
+        <h4><i data-lucide="utensils"></i>오늘의 상남자 학식</h4>
+        <ul class="plain">
+          <li><span>레어 스테이크 500g</span><span>윈스롭</span></li>
+          <li><span>생달걀 6개</span><span>원샷</span></li>
+          <li><span>에스프레소 4샷</span><span>무설탕</span></li>
+          <li><span>무맛 단백질 쉐이크</span><span>무한 리필</span></li>
+        </ul>
+      </div>
+      <div class="widget">
+        <h4><i data-lucide="calendar-days"></i>다가오는 일정</h4>
+        <ul class="plain" id="upcoming"></ul>
+      </div>
+    </div>
+
+    <main class="feed" id="feed" aria-live="polite"></main>
+  </section>
+
+  <!-- ===== 게시판 ===== -->
+  <section id="view-board" hidden>
+    <div class="view-head"><h2>게시판</h2><p>애시컴 재학생 인증 익명 게시판</p></div>
+    <div class="sec" id="boardList"></div>
+    <div class="sec">
+      <div class="sec-title"><i data-lucide="flame"></i>지금 HOT</div>
+      <div class="card" id="hotList"></div>
+    </div>
+  </section>
+
+  <!-- ===== 캠퍼스 ===== -->
+  <section id="view-campus" hidden>
+    <div class="crest">
+      <div class="seal"><i data-lucide="landmark"></i></div>
+      <h3>ASHCOMBE UNIVERSITY</h3>
+      <div class="motto">LUX ET VERITAS EX ANTIQUIS</div>
+      <div class="est">Est. 1746 · Ashcombe, Connecticut</div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><i data-lucide="info"></i>학교 정보</div>
+      <div class="stats">
+        <div class="card stat"><small><i data-lucide="landmark"></i>설립</small><b>1746년</b></div>
+        <div class="card stat"><small><i data-lucide="percent"></i>학부 합격률</small><b>4%</b></div>
+        <div class="card stat"><small><i data-lucide="users"></i>재학생</small><b>13,500명</b></div>
+        <div class="card stat"><small><i data-lucide="landmark"></i>대학 기금</small><b>$300억</b></div>
+        <div class="card stat"><small><i data-lucide="palette"></i>교색</small><b><span class="swatch" style="background:#1F4D3A"></span><span class="swatch" style="background:#C5A059"></span> 진녹·금</b></div>
+        <div class="card stat"><small><i data-lucide="feather"></i>마스코트</small><b>매 (Falcons)</b></div>
+      </div>
+      <div class="card" style="margin-top:8px">
+        <div class="row"><span class="row-icon"><i data-lucide="map-pin"></i></span><div class="row-main"><b>위치</b><span>코네티컷주 애시컴 · 뉴욕에서 기차로 1시간 30분</span></div></div>
+        <div class="row"><span class="row-icon"><i data-lucide="graduation-cap"></i></span><div class="row-main"><b>강세 분야</b><span>국제관계학 · 경제학 최상위권</span></div></div>
+        <div class="row"><span class="row-icon"><i data-lucide="award"></i></span><div class="row-main"><b>주요 동문</b><span>대통령 3명, 대법관, 노벨상 수상자, 월가 CEO</span></div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><i data-lucide="calendar-days"></i>연간 학사 일정</div>
+      <div class="card" id="eventList"></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><i data-lucide="map"></i>캠퍼스 명소</div>
+      <div class="card">
+        <div class="row"><span class="row-icon"><i data-lucide="trees"></i></span><div class="row-main"><b>올드 쿼드</b><span>고딕 석조 건물로 둘러싸인 중앙 잔디광장</span></div></div>
+        <div class="row"><span class="row-icon"><i data-lucide="building-2"></i></span><div class="row-main"><b>윈스롭 칼리지</b><span>12개 레지던셜 칼리지 중 가장 오래된 곳</span></div></div>
+        <div class="row"><span class="row-icon"><i data-lucide="music"></i></span><div class="row-main"><b>펨브로크 홀</b><span>방치된 옛 음악관. 밤엔 인적이 없다는데…</span></div></div>
+        <div class="row"><span class="row-icon"><i data-lucide="beer"></i></span><div class="row-main"><b>대학가</b><span>펍, 24시간 다이너, 재즈바, 서점</span></div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><i data-lucide="swords"></i>스포츠</div>
+      <div class="chips"><span>조정</span><span>펜싱</span><span>라크로스</span><span>스쿼시</span><span>폴로</span></div>
+      <div class="card" style="margin-top:8px">
+        <div class="row"><span class="row-icon"><i data-lucide="trophy"></i></span><div class="row-main"><b>라이벌: 해리슨 대학교</b><span>매년 11월 대항전 "팰컨 게임"</span></div></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-title"><i data-lucide="scroll-text"></i>애시컴 마초 생활 수칙</div>
+      <div class="card">
+        <ol class="rules">
+          <li>핑크나 파스텔톤 옷을 입은 자는 게이로 간주한다.</li>
+          <li>거울을 3초 이상 들여다본 자는 게이로 간주한다.</li>
+          <li>립밤, 핸드크림, 향수 사용을 금한다.</li>
+          <li>비 오는 날 우산을 쓴 자는 게이로 간주한다.</li>
+          <li>디저트, 달달한 칵테일, 프라푸치노를 금한다. 상남자의 음료는 블랙커피, 생맥주, 단백질 쉐이크, 위스키뿐이다.</li>
+          <li>스테이크를 예쁘게 썰거나 냅킨을 무릎에 펴지 않는다.</li>
+          <li>예술, 문학, 클래식 음악에 관심을 보이지 않는다.</li>
+          <li>뜨개질과 자수는 언급조차 금한다.</li>
+        </ol>
+      </div>
+      <p style="font-size:11.5px;color:var(--muted);margin-top:6px;text-align:right">애시컴 마초 자치위원회 제정</p>
+    </div>
+
+    <div class="sec">
+      <div class="card lantern-card">
+        <span class="row-icon"><i data-lucide="lock"></i></span>
+        <div><b>The Ninth Lantern</b><p>그런 단체는 존재하지 않습니다. 4월 탭 나이트에 대해 묻지 마십시오.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 알림 ===== -->
+  <section id="view-noti" hidden>
+    <div class="view-head" style="display:flex;justify-content:space-between;align-items:flex-end">
+      <div><h2>알림</h2><p>내 글과 캠퍼스 소식</p></div>
+      <button class="link-btn" id="readAll"><i data-lucide="check-check"></i>모두 읽음</button>
+    </div>
+    <div class="sec"><div class="card" id="notiList"></div></div>
+  </section>
+
+  <!-- ===== MY ===== -->
+  <section id="view-my" hidden>
+    <div class="card profile">
+      <span class="avatar" style="background:#C5A059"><i data-lucide="user"></i></span>
+      <div>
+        <b>익명의 애시컴 학생</b>
+        <div class="verified"><i data-lucide="badge-check"></i>.ashcombe.edu 인증 완료</div>
+        <div class="sub">Class of 2028</div>
+      </div>
+    </div>
+    <div class="sec"><div class="card my-stats" id="myStats"></div></div>
+    <div class="sec">
+      <div class="sec-title"><i data-lucide="file-text"></i>내가 쓴 글</div>
+      <div class="card" id="myPosts"></div>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><i data-lucide="message-circle"></i>내가 쓴 댓글</div>
+      <div class="card" id="myComments"></div>
+    </div>
+    <div class="sec">
+      <div class="sec-title"><i data-lucide="settings"></i>설정</div>
+      <div class="card">
+        <div class="row"><span class="row-icon"><i data-lucide="moon"></i></span><div class="row-main"><b>랜턴 모드</b><span>The Ninth Lantern 다크 테마</span></div><button class="switch" id="lanternSwitch" role="switch" aria-checked="false" aria-label="랜턴 모드"></button></div>
+        <div class="row"><span class="row-icon"><i data-lucide="volume-2"></i></span><div class="row-main"><b>효과음</b><span>버튼을 누를 때 소리 내기</span></div><button class="switch" id="soundSwitch" role="switch" aria-checked="true" aria-label="효과음"></button></div>
+        <button class="row danger" id="resetBtn"><span class="row-icon"><i data-lucide="rotate-ccw"></i></span><div class="row-main"><b>데이터 초기화</b><span>내 글, 댓글, 추천, 알림을 모두 지워요</span></div></button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="fab-wrap" id="fabWrap"><button class="fab" id="writeBtn" aria-label="새 가십 작성"><i data-lucide="pen-line"></i></button></div>
+
+<nav class="tabbar" id="tabbar">
+  <button class="on" data-view="home"><i data-lucide="house"></i>홈</button>
+  <button data-view="board"><i data-lucide="layout-grid"></i>게시판</button>
+  <button data-view="campus"><i data-lucide="landmark"></i>캠퍼스</button>
+  <button data-view="noti"><i data-lucide="bell"></i>알림<span class="badge" id="notiBadge" hidden></span></button>
+  <button data-view="my"><i data-lucide="user"></i>MY</button>
+</nav>
+
+<dialog id="writeModal">
+  <form id="writeForm" method="dialog">
+    <div class="sheet-head">새 가십 작성하기<button type="button" id="closeModal" aria-label="닫기"><i data-lucide="x"></i></button></div>
+    <div class="sheet-body">
+      <label for="wCat">카테고리</label>
+      <select id="wCat"></select>
+      <label for="wTitle">제목</label>
+      <input id="wTitle" maxlength="80" required placeholder="예: 펜싱부 탈의실에서 장미 향 남">
+      <label for="wBody">본문</label>
+      <textarea id="wBody" maxlength="1000" required placeholder="익명이니까 마음껏 털어놔라, 브로"></textarea>
+      <button class="submit" type="submit"><i data-lucide="send"></i>익명으로 게시</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const CATS = {
+  all:    { label: '전체',             icon: 'flame' },
+  alpha:  { label: '알파메일 인증방',   icon: 'dumbbell',       color: '#8B0000', desc: '근수저 인증, 상남자 챌린지, 프로틴 성지' },
+  prince: { label: '왕자 목격담',       icon: 'crown',          color: '#A07A2C', desc: '모나코 왕자님 실시간 목격 제보' },
+  bamboo: { label: '펨브로크 대나무숲', icon: 'ghost',          color: '#4B3F8C', desc: '아무도 모르게 털어놓는 곳' },
+  lost:   { label: '분실물 센터',       icon: 'package-search', color: '#1F4D3A', desc: '캠퍼스 분실물·습득물 신고' }
+};
+
+const AV = {
+  falcon:  { icon: 'feather',   color: '#0F2C59' },
+  fencer:  { icon: 'swords',    color: '#8B0000' },
+  lax:     { icon: 'shield',    color: '#2F6B4F' },
+  rower:   { icon: 'anchor',    color: '#1F6F7A' },
+  cleaner: { icon: 'sparkles',  color: '#6B7280' },
+  queen:   { icon: 'gem',       color: '#9D3C72' },
+  owl:     { icon: 'moon-star', color: '#4B3F8C' },
+  dining:  { icon: 'utensils',  color: '#A16207' },
+  lifter:  { icon: 'dumbbell',  color: '#5A3E2B' },
+  squash:  { icon: 'target',    color: '#2E5E8C' },
+  protein: { icon: 'flask-conical', color: '#7A4E9C' },
+  ta:      { icon: 'clipboard-list', color: '#4A5568' },
+  warden:  { icon: 'key-round', color: '#1F4D3A' },
+  fossil:  { icon: 'bone',      color: '#7C6F57' },
+  bartender: { icon: 'wine',    color: '#8B2252' },
+  student: { icon: 'book-open', color: '#0F2C59' },
+  patrol:  { icon: 'siren',     color: '#B91C1C' },
+  watcher: { icon: 'eye',       color: '#374151' },
+  me:      { icon: 'user',      color: '#C5A059' }
+};
+
+// 연간 학사 일정 (m: 월)
+const EVENTS = [
+  { m: 8,  sem: 'fall',   when: '8월 말',   title: '기숙사 입주 · 신입생 OT', icon: 'luggage' },
+  { m: 9,  sem: 'fall',   when: '9월 초',   title: '가을학기 개강 · 랜턴 행진', desc: '신입생이 밤에 호숫가를 따라 등불을 들고 걷는 전통', icon: 'lamp' },
+  { m: 10, sem: 'fall',   when: '10월 중순', title: '중간고사 · 가을방학', icon: 'book-open' },
+  { m: 10, sem: 'fall',   when: '10월 31일', title: '칼리지별 할로윈 파티', desc: '올드 쿼드 코스튬 행사', icon: 'ghost' },
+  { m: 11, sem: 'fall',   when: '11월 중순', title: '팰컨 게임 vs 해리슨', desc: '캠퍼스 최대 행사. 원정 응원과 애프터파티', icon: 'trophy' },
+  { m: 11, sem: 'fall',   when: '11월 말',   title: '추수감사절 방학', icon: 'drumstick' },
+  { m: 12, sem: 'fall',   when: '12월 초',   title: '프로스트 볼', desc: '블랙타이 무도회. 학기 마지막 사교 행사', icon: 'snowflake' },
+  { m: 12, sem: 'fall',   when: '12월 중순', title: '기말고사 · 겨울방학', icon: 'book-open' },
+  { m: 1,  sem: 'spring', when: '1월 중순',  title: '봄학기 개강', icon: 'school' },
+  { m: 2,  sem: 'spring', when: '2월',       title: '펜싱 시즌 절정', desc: '아이비급 리그 대회', icon: 'swords' },
+  { m: 3,  sem: 'spring', when: '3월',       title: '봄방학 · NCAA 펜싱 선수권', icon: 'medal' },
+  { m: 4,  sem: 'spring', when: '4월 중순',  title: '탭 나이트', desc: '비밀결사들이 3학년 신입 멤버를 지목하는 밤', icon: 'key-round' },
+  { m: 4,  sem: 'spring', when: '4월 말',    title: '레가타 데이', desc: '호숫가 조정 경기, 피크닉과 낮술', icon: 'sailboat' },
+  { m: 5,  sem: 'spring', when: '5월 초',    title: '기말고사', icon: 'book-open' },
+  { m: 5,  sem: 'spring', when: '5월 말',    title: '졸업 주간 · 졸업식', icon: 'graduation-cap' }
+];
+const THIS_MONTH = new Date().getMonth() + 1;
+
+const GIO = { anon: '익명의 펜싱 브로', av: 'fencer', real: '지오반니' };
+
+// 알파메일 인증방 15선
+const ALPHA = [
+  {
+    id: 'a1', cat: 'alpha', time: '8분 전', up: 233, down: 6,
+    author: { anon: '익명의 라크로스 브로', av: 'lax', real: '브래드' },
+    title: "다이닝홀에서 스테이크 '예쁘게' 썰어 먹는 놈 봐라 ㅋㅋ",
+    body: '사내새끼가 고기 한 점 썰겠다고 왼손에 포크, 오른손에 나이프 쥐고 팔꿈치 오므린 채 종종거리는 거 실화냐? 무릎에 냅킨까지 펴놓던데 아주 프린세스 납셨네 ㅋㅋ 상남자는 포크 하나로 한가운데 찍어서 그냥 물어뜯는 거다.\n우리 펜싱부 주장 지오(Gio) 봐라. 아까 고기 나오자마자 나이프 바닥에 던져버리고 포크로 찍어서 3분 만에 해치우더라. 크으, 야수 그 자체.',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: 'ㄹㅇ 지오 형님은 인정이지. 저번에 냅킨으로 코 한 번 팽 풀더니 바로 구겨서 버리는 거 보고 감탄함.' },
+      { ...GIO, anon: '익명2', text: '야 나이프에 물얼룩 묻어있어서 더러워서 안 쓴 거다... 아 아니, 그래 시발 남자가 귀찮게 칼질이 웬 말이냐 씹어 삼켜야지.' }
+    ]
+  },
+  {
+    id: 'a2', cat: 'alpha', time: '25분 전', up: 188, down: 4,
+    author: { anon: '벤치프레스 3대 500', av: 'lifter' },
+    title: "[경고] 남자 화장실 거울 앞 체류 시간 '3초' 제한한다",
+    body: '방금 윈스롭 칼리지 1층 화장실에서 손 씻고 거울 보면서 앞머리 쓸어 넘긴 놈 누구냐? 내 스톱워치로 딱 4.2초 걸렸다.\n거울을 3초 이상 본다 = 자기 얼굴에 취한 게이 확정. 진짜 알파메일은 아침에 찬물로 고양이 세수만 하고 눈곱만 떼고 강의실 들어가는 거다.',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '손 씻을 때 비누 거품 내는 것도 솔직히 좀 의심스러움. 상남자는 물로만 헹구고 바지에 닦는다.' },
+      { ...GIO, anon: '익명2', text: '시발 더러운 새끼들아 화장실 다녀왔으면 비누칠을 30초는 해야 대장균이 죽을 거 아냐 내 옆에 오지 마라 진짜' }
+    ]
+  },
+  {
+    id: 'a3', cat: 'alpha', time: '40분 전', up: 142, down: 3,
+    author: { anon: '익명의 스쿼시 부원', av: 'squash' },
+    title: '비 오는데 우산 쓰는 놈들은 그냥 타 대학으로 편입해라 ㅋㅋ',
+    body: '하늘에서 떨어지는 물방울이 무서워서 천쪼가리 밑에 숨는 게 사내새끼냐? 아까 올드 쿼드에서 체크무늬 우산 쓰고 물웅덩이 피해서 총총걸음으로 걷던 놈 자수해라.\n반면에 지오(Gio) 봐라. 폭우 속에서 가죽 자켓만 입고 미간 찌푸린 채 걸어가는데 테스토스테론이 빗물 타고 흐르더라.',
+    comments: [
+      { ...GIO, anon: '익명1', text: '비 맞으면 감기 걸리는 게 상식이지 그게 왜 테스토스테론이냐 빡대가리들아' },
+      { anon: '익명2', av: 'falcon', text: 'ㅋㅋㅋ 어쭈 익명1 말투 보니까 아까 그 체크무늬 우산 게이 본인이네? 긁혔쥬?' }
+    ]
+  },
+  {
+    id: 'a4', cat: 'alpha', time: '1시간 전', up: 167, down: 9,
+    author: { anon: '프로틴 중독자', av: 'protein' },
+    title: "카페에서 '빨대' 꽂아 마시는 놈들 전부 색출해야 함",
+    body: '입술 오므려서 플라스틱 관을 쪽쪽 빨아먹는 행위 자체가 이미 알파메일 실격이다. 게다가 메뉴가 캐러멜 프라푸치노? 휘핑크림까지 올렸더라?\n사내새끼의 음료는 오직 얼음도 안 넣은 뜨거운 블랙커피, 생맥주, 무맛 단백질 쉐이크, 그리고 스트레이트 위스키뿐이다.',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '컵 입구에서 입 떼지 않고 원샷 때린 다음에 종이컵 우그러뜨려서 쓰레기통에 덩크슛 넣어야 정석임.' },
+      { anon: '익명2', av: 'rower', text: '인정 ㅋㅋ 단 거 먹고 싶으면 초코맛 프로틴 가루를 숟가락으로 퍼먹어라.' }
+    ]
+  },
+  {
+    id: 'a5', cat: 'alpha', time: '1시간 전', up: 204, down: 11,
+    author: { anon: '익명의 조교', av: 'ta' },
+    title: "국제관계학 강의실에 '복숭아 향 립밤' 흘리고 간 놈 누구냐",
+    body: '입술이 트면 앞니로 껍질을 물어뜯어서 피를 내는 게 애시컴의 전통이다. 입술에 반짝거리는 기름칠을 하고 다녀? 심지어 뚜껑 열자마자 달달한 복숭아 냄새가 진동을 하네 ㅋㅋ\n지문 감식 의뢰하기 전에 당장 나와서 대가리 박아라.',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '겨울에 입술에서 피 안 나면 게이임. 피 맛으로 철분 보충하는 거 국룰 아니냐?' },
+      { anon: '익명2', av: 'squash', text: '헐 저번에 줄리안(펜싱부 3학년) 입술이 유독 반질거리던데 설마...?' },
+      { anon: '익명3', av: 'fencer', real: '줄리안', text: '어라, 들켰네? 내 입술이 좀 부럽나 봐, 브로? ;)' }
+    ]
+  },
+  {
+    id: 'a6', cat: 'alpha', time: '2시간 전', up: 176, down: 5,
+    author: { anon: '익명의 라크로스 브로', av: 'lax', real: '브래드' },
+    title: '파스텔 톤이랑 핑크색 옷 입는 놈들 눈 버린다 진짜',
+    body: '남자의 색깔은 블랙, 그레이, 카키, 네이비 딱 네 개다. 오늘 도서관에 연분홍색 캐시미어 니트 입고 온 놈 때문에 내 안구에 게이 바이러스 옮을 뻔함.\n옷도 다림질해서 칼주름 잡혀 있던데, 상남자는 바닥에 굴러다니는 맨투맨 아무거나 주워 입고 나오는 거다. 냄새만 안 나면 3일 연속 입어도 무죄.',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '냄새나도 무죄임. 그건 수컷의 페로몬이다.' },
+      { ...GIO, anon: '익명2', text: '야 이 거지 같은 새끼야 빨래는 매일 돌리고 섬유유연제도 좀 넣고 살아라 옆에 지나갈 때마다 쉰내 나서 토할 것 같으니까' }
+    ]
+  },
+  {
+    id: 'a7', cat: 'alpha', time: '2시간 전', up: 287, down: 14,
+    author: { anon: '체육관 관리인', av: 'cleaner' },
+    title: '[분실물] 펜싱 연습장 탈의실 구석에서 발견된 괴물체',
+    body: '최고급 수제 대바늘 한 세트랑, 반쯤 짜다 만 베이비 핑크색 목도리, 그리고 꽃무늬 자수가 놓인 손수건이 떨어져 있었습니다. 펜싱부원 중에 주인이 있는 것 같은데 데스크로 찾아가세요.\n안 찾아가면 내일 올드 쿼드 게시판에 박제합니다.',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '와 미쳤다 펜싱부에 뜨개질하는 놈이 있다고??? 당장 색출해라 이건 애시컴 역사상 최악의 게이 스캔들이다!!' },
+      { ...GIO, anon: '익명2', text: '아씨발 그거 우리 누나가 내 가방에 잘못 넣은 거라고 몇 번을 말해 아니 내 거 아니라고 아무튼 더러운 손으로 건드리지 마 손때 묻으니까 쓰레기통에 버리지도 마 그냥 가만히 놔둬 내가 가서 치울 거야' },
+      { anon: '익명3', av: 'lifter', text: '익명2는 왜 저렇게 급발진함? ㅋㅋㅋ 니 누나 거냐?' }
+    ]
+  },
+  {
+    id: 'a8', cat: 'alpha', time: '3시간 전', up: 131, down: 2,
+    author: { anon: '윈스롭 칼리지 사감', av: 'warden' },
+    title: "공용 세탁기에서 '수면 양말(곰돌이 무늬)' 나왔다",
+    body: '보들보들한 극세사 재질에 발바닥에 미끄럼 방지 젤리까지 붙어있네? 영하 10도에도 기숙사 바닥을 맨발로 걸어 다니는 게 애시컴 사내들의 기개다.\n발 시렵다고 수면 양말 신는 놈은 당장 자퇴서 내라.',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '그거 내 룸메이트 거 같은데 ㅋㅋ 밤에 자면서 이불도 끝까지 덮고 자더라. 상남자는 팬티만 입고 창문 열고 자는데.' },
+      { anon: '익명2', av: 'rower', text: '수면 양말은 솔직히 퇴학 사유 맞음.' }
+    ]
+  },
+  {
+    id: 'a9', cat: 'alpha', time: '4시간 전', up: 245, down: 19,
+    author: { anon: '경제학과 화석', av: 'fossil' },
+    title: "도서관 반납 카트에 '이탈리아 연애 시집' 꽂아둔 놈 나와라",
+    body: '산드로 펜나(Sandro Penna)? 이름도 요망하네. 사내새끼가 읽을 책은 『손자병법』, 『월스트리트 제왕들의 투자법』, 『근육 해부학』 딱 세 권뿐이다.\n어디서 감수성 터지게 시집을 읽고 자빠졌냐 ㅋㅋ 심지어 책갈피가 말린 네잎클로버임 ㅋㅋㅋㅋ',
+    comments: [
+      { ...GIO, anon: '익명1', text: "야 이 교양 없는 오랑우탄 새끼들아 문학의 '문' 자도 모르는 뇌 근육들이 시의 가치를 알기나 하냐? 그리고 그거 네잎클로버 아니라 제비꽃 압화다 멍청아" },
+      { anon: '익명2', av: 'falcon', text: 'ㅋㅋㅋㅋ 제비꽃 압화 ㅋㅋㅋㅋㅋ 범인 검거 완료!! 여기 초특급 문학 게이요!!' },
+      { ...GIO, anon: '익명1', deleted: true, text: '' }
+    ]
+  },
+  {
+    id: 'a10', cat: 'alpha', time: '5시간 전', up: 158, down: 7,
+    author: { anon: '대학가 다이너 단골', av: 'dining' },
+    title: "핫윙 먹다가 '습- 하-' 소리 내거나 우유 시키는 놈 = 게이",
+    body: '어제 24시 다이너에서 고스트 페퍼 핫윙 시켜놓고 눈물 찔끔 흘리면서 쿨피스 찾던 1학년 누구냐? 고통은 오직 미간 주름으로만 참아내는 거다.\n다쳐서 뼈가 부러져도 \'아야\' 소리 내면 그날로 족보에서 파버린다.',
+    comments: [
+      { anon: '익명1', av: 'lax', text: '인정. 난 저번에 라크로스 스틱에 정강이 맞아서 실금 갔는데 병원 안 가고 테이핑만 감고 뜀.' },
+      { anon: '익명2', av: 'falcon', text: '병원 가는 거 자체가 이미 엄살임. 자연치유가 알파의 길이다.' }
+    ]
+  },
+  {
+    id: 'a11', cat: 'alpha', time: '6시간 전', up: 119, down: 8,
+    author: { anon: '조정부 주장', av: 'rower' },
+    title: '기침 두 번 했다고 따뜻한 유자차 찾는 놈 실화냐?',
+    body: '바이러스 따위에게 굴복해서 약국을 가? 사내새끼는 열이 40도까지 올라가도 찬물 샤워 한 번 하고 스쿼트 100개 조지면 땀으로 다 배출된다.\n알약을 물이랑 삼키는 행위 자체가 나약함의 증거다.',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '그래도 정 목이 아플 땐 위스키로 가글해서 소독하는 건 인정해 줌.' },
+      { anon: '익명2', av: 'squash', text: '유자차는 선 넘었지 ㅋㅋ 티타임 갖냐?' }
+    ]
+  },
+  {
+    id: 'a12', cat: 'alpha', time: '7시간 전', up: 172, down: 12,
+    author: { anon: '익명의 바텐더', av: 'bartender' },
+    title: "대학가 펍에서 '피치 크러쉬' 시키는 남학생들에게 고한다",
+    body: '잔 테두리에 설탕 묻혀달라고 하지 마라. 체리랑 조그만 종이 우산 꽂아달라고 하지도 마라. 핑크빛 나는 술 시켜놓고 새끼손가락 치켜들고 마시는 놈들 볼 때마다 쉐이커 던지고 싶다.\n남자는 무조건 온더락 아니면 병나발이다.',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '얼음 넣는 것도 솔직히 좀 하남자 같음. 미지근한 보드카 병째로 마셔야지.' },
+      { anon: '익명2', av: 'queen', real: '클로이', text: '어머, 난 지오가 가끔 샴페인 잔 잡을 때 손 모양이 너무 우아해서 좋던데? 물론 지오는 바로 맥주병으로 바꿔 들지만 ;)' }
+    ]
+  },
+  {
+    id: 'a13', cat: 'alpha', time: '9시간 전', up: 96, down: 4,
+    author: { anon: '정치외교학 3학년', av: 'student' },
+    title: "강의 시간에 형광펜 '2색 이상' 쓰면 게이 확정이다",
+    body: '제목은 파란펜, 중요 표시는 빨간펜, 밑줄은 노란 형광펜? 아주 무지개를 그려라 무지개를 ㅋㅋ\n알파메일은 주머니에서 굴러다니는 부러진 몽땅연필이나 똥 나오는 볼펜 하나로 전공 책 여백에 휘갈겨 쓰는 거다. 필통 들고 다니는 놈도 의심 대상임.',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '필기를 왜 함? 그냥 교수님 눈 똑바로 쳐다보면서 기싸움으로 머릿속에 다 때려 박는 거 아니냐?' },
+      { anon: '익명2', av: 'lifter', text: '난 볼펜도 안 들고 다님. 샤프심만 들고 다닌다.' }
+    ]
+  },
+  {
+    id: 'a14', cat: 'alpha', time: '어제', up: 214, down: 10,
+    author: { anon: '기숙사 불시점검단', av: 'patrol' },
+    title: '침대에 베개 2개 이상 놓거나 인형 두는 놈들 봐라',
+    body: '구스다운 이불? 바디필로우? 사내새끼 잠자리는 매트리스 위에 군용 모포 한 장이면 충분하다. 방에서 디퓨저 향기 나는 방들도 전부 명단 적어놨다.\n남자의 방에서는 오직 땀 냄새, 가죽 냄새, 그리고 프로틴 가루 냄새만 나야 한다.',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '근데 윈스롭 칼리지 지오반니 스위트룸 앞을 지나갈 때마다 은은하게 백합이랑 비누 향기 나던데 그건 뭐냐?' },
+      { ...GIO, anon: '익명2', text: '야 이 코 썩은 새끼야 그거 복도 청소부 아저씨가 뿌린 락스 냄새다 내 방에서는 피 냄새랑 쇠 냄새밖에 안 나 꺼져' },
+      { anon: '익명3', av: 'lax', text: '역시 지오 형님!! 방에서 피 냄새랑 쇠 냄새가 난대 미쳤다 개멋있어 ㅋㅋㅋㅋ' }
+    ]
+  },
+  {
+    id: 'a15', cat: 'alpha', time: '어제', up: 263, down: 9,
+    author: { anon: '올드 쿼드 파수꾼', av: 'watcher' },
+    title: '캠퍼스 길고양이 보고 혀 짧은 소리 내는 놈 녹음했다',
+    body: '도서관 뒤편에 사는 삼색 고양이 보고 "오구오구 우쭈쭈 우리 애기 츄르 머거쪄요~" 하던 굵은 목소리의 주인공, 내일 정오까지 자수해라.\n알파메일은 귀여운 동물을 봐도 팔짱 끼고 턱만 한 번 까딱여주는 법이다.',
+    comments: [
+      { ...GIO, anon: '익명1', text: '야 솔직히 그 고양이가 먼저 내 바짓가랑이에 털 비비면서 애교 부렸으면 쓰다듬어 주는 게 귀족의 노블레스 오블리주 아니냐? 아 물론 난 발로 저리 가라고 했다' },
+      { anon: '익명2', av: 'falcon', text: '노블레스 뭐요? 단어 선택이 좀 수상한데? ㅋㅋㅋ' },
+      { ...GIO, anon: '익명1', text: '닥쳐 시발 고양이한테도 기싸움 지는 찐따 새끼들아' }
+    ]
+  }
+];
+
+const BASE = [
+  {
+    id: 'p2', cat: 'lost', time: '1시간 전', up: 301, down: 12,
+    author: { anon: '익명의 청소부', av: 'cleaner' },
+    title: '[분실물] 펜싱 연습장 탈의실 구석에서 발견된 물건 주인 찾습니다',
+    body: '최고급 캐시미어 털실(베이비 핑크색) 한 뭉치랑, 꽃무늬 자수가 놓인 손수건, 그리고 이탈리아어로 된 시집(Sandro Penna 작)이 떨어져 있었습니다. 펜싱부원 중에 주인이 있는 것 같은데 데스크로 찾아가세요.',
+    poll: { q: '이 물건의 주인은?', options: [ { t: '여친 선물 사다 흘린 알파메일', v: 36 }, { t: '펜싱부에 잠입한 초특급 게이 스파이', v: 264 } ] },
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '와 미쳤다 펜싱부에 뜨개질하는 놈이 있다고??? 당장 색출해라 이건 애시컴 역사상 최악의 스캔들이다' },
+      { anon: '익명2', av: 'fencer', real: '줄리안', text: '흠, 시집 취향이 아주 우아하네. 주인이 누군지 참 궁금하군 ;)' },
+      { ...GIO, anon: '익명3', deleted: true, text: '' },
+      { ...GIO, anon: '익명3', text: '아씨발 그거 우리 누나가 내 가방에 잘못 넣은 거라고 몇 번을 말해 아니 내 거 아니라고 아무튼 건드리지 마 손때 묻으니까 쓰레기통에 버리지도 마 그냥 가만히 놔둬 내가 가서 치울 거야' }
+    ]
+  },
+  {
+    id: 'p3', cat: 'prince', time: '3시간 전', up: 188, down: 41,
+    author: { anon: '퀸 비 (Queen B)', av: 'queen', real: '클로이' },
+    title: '요즘 지오(Gio) 옆에 자꾸 알짱거리는 그 애 정체가 뭐야?',
+    body: '윈스롭 칼리지 근처에서도 둘이 말싸움하는 거 봤고, 지오가 걔만 보면 눈을 못 떼고 계속 시비 걸던데. 설마 지오가 걔한테 관심 있는 건 아니겠지? 지오 급 되는 로열 패밀리가 그런 평범한 애랑 엮일 리가 없잖아. 프로스트 볼 파트너는 당연히 나여야 하고. 누가 아는 거 있으면 제보 좀.',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '둘이 맨날 으르렁대던데? 지오가 걔 약점 잡아서 괴롭히는 거 아님?' },
+      { anon: '익명2', av: 'rower', text: '근데 어제 다이닝홀에서 지오가 걔 앞자리에 앉아서 자기가 마시던 단백질 쉐이크 억지로 밀어주는 거 봄 ㅋㅋㅋ' },
+      { ...GIO, anon: '익명3', text: '걔랑 아무 사이 아니다. 받아낼 게 있어서 따라다니는 거뿐임. 쓸데없는 소리 퍼뜨리지 마라' }
+    ]
+  },
+  {
+    id: 'p4', cat: 'bamboo', time: '어제 오후 11:45', up: 97, down: 2,
+    author: { anon: '익명의 올빼미', av: 'owl' },
+    title: '펨브로크 홀(옛 음악관) 밤에 진짜 귀신 나오냐?',
+    body: '며칠 전에 밤늦게 그 앞을 지나가다가 이상한 소리 들림. 누구 벽에 쾅 부딪히는 소리랑 좀... 야릇한 숨소리 같은 거? 무서워서 도망쳤는데 거기 밤에 원래 누가 쓰나?',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '펨브로크 원래 귀신 나옴. 19세기에 피아노 치다 죽은 학생 있다던데' },
+      { anon: '익명2', av: 'fencer', real: '줄리안', text: '귀신은 아닐걸 ;) 숨소리가 꽤 생생했을 텐데' },
+      { ...GIO, anon: '익명3', text: '귀신 맞음. 밤에 가지 마라 진짜로' }
+    ]
+  },
+  {
+    id: 'p6', cat: 'prince', time: '6시간 전', up: 154, down: 19,
+    author: { anon: '익명의 다이닝홀 알바', av: 'dining' },
+    title: '오늘 왕자님 다이닝홀 목격담',
+    body: '지오가 스테이크를 포크로 찍어서 통째로 뜯어먹음. 근데 다 먹고 나서 입가를 냅킨으로 아주 우아하게 톡톡 두드리더라? 그건 뭐임?',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '냅킨 톡톡은 게이 아님?' },
+      { anon: '익명2', av: 'lax', real: '브래드', text: '야 지오 형님은 냅킨으로 입 닦은 게 아니라 냅킨을 처치한 거다 ㅋㅋ' },
+      { ...GIO, anon: '익명3', text: '입에 소스 묻어서 닦았다 뭐 문제 있냐' }
+    ]
+  },
+  {
+    id: 'p7', cat: 'bamboo', time: '새벽 2:14', up: 77, down: 1,
+    author: { anon: '익명의 불면증', av: 'owl' },
+    title: '윈스롭 4층, 새벽 2시에 왜 바늘 딸깍거리는 소리가 나냐',
+    body: '그... 뜨개바늘 소리 같은데? 물어보기 무서움.',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '그거 라디에이터야 브로' },
+      { ...GIO, anon: '익명2', text: '윈스롭에 뜨개질하는 놈 없음. 그건 사회적 자살임. 라디에이터 맞음.' }
+    ]
+  }
+];
+
+// 피드 노출 순서: 알파메일 글 사이사이에 다른 게시판 글을 섞음
+const SEED_ORDER = ['a1', 'p2', 'a2', 'a3', 'p3', 'a4', 'a5', 'p4', 'a6', 'a7', 'p6', 'a8', 'a9', 'p7', 'a10', 'a11', 'a12', 'a13', 'a14', 'a15'];
+const SEED = SEED_ORDER.map(id => [...ALPHA, ...BASE].find(p => p.id === id));
+
+const SEED_NOTIS = [
+  { id: 'n1', icon: 'flame',          text: '[분실물] 펜싱 연습장 탈의실 글이 HOT 게시판에 올랐어요', time: '1시간 전', post: 'p2', read: false },
+  { id: 'n2', icon: 'triangle-alert', text: '마초 자치위원회: 도서관 3층 핸드크림 사건 제보를 받습니다', time: '3시간 전', read: false },
+  { id: 'n3', icon: 'trophy',         text: '팰컨 게임 원정 응원 버스 신청이 열렸어요', time: '어제', view: 'campus', read: false },
+  { id: 'n4', icon: 'ghost',          text: '펨브로크 홀 귀신 목격담에 새 댓글이 달렸어요', time: '어제', post: 'p4', read: true },
+  { id: 'n5', icon: 'snowflake',      text: '프로스트 볼 티켓 판매가 곧 시작돼요. 블랙타이 필수', time: '2일 전', view: 'campus', read: true }
+];
+
+// 키워드 자동 답글 (익명의 지오반니가 등판)
+const AUTO_REPLIES = [
+  { keys: ['바텀', '깔리', '밑에'], text: '바텀은 무슨. 증거 있냐? 없으면 입 다물어라' },
+  { keys: ['뜨개', '자수', '캐시미어', '털실', '바늘'], text: '애시컴에 그런 거 하는 놈 없다. 신고 먹기 전에 글 내려라' },
+  { keys: ['펨브로크'], text: '펨브로크 귀신 나옴. 밤에 가지 마라. 진짜임' },
+  { keys: ['시집', '펜나'], text: '시 같은 거 읽는 놈은 게이지 ㅋㅋ 근데 그 시집 어디서 났냐' },
+  { keys: ['왕자', '지오', 'gio', '모나코'], text: '지오 형님 얘기 함부로 하는 거 아니다 브로' }
+];
+
+const STORE_KEY = 'ashcombe-sidechat-v4';
+const PREVIEW = 2;
+let state = {
+  posts: structuredClone(SEED), notis: structuredClone(SEED_NOTIS), votes: {}, polls: {},
+  lantern: false, muted: false, cat: 'all', q: '', open: {}, view: 'home'
+};
+
+function load() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORE_KEY));
+    if (saved && Array.isArray(saved.posts)) {
+      state.posts = saved.posts;
+      state.notis = saved.notis || state.notis;
+      state.votes = saved.votes || {};
+      state.polls = saved.polls || {};
+      state.lantern = !!saved.lantern;
+      state.muted = !!saved.muted;
+    }
+  } catch (e) {}
+}
+function save() {
+  try {
+    const posts = state.posts.map(p => ({ ...p, comments: p.comments.map(({ _new, ...c }) => c) }));
+    localStorage.setItem(STORE_KEY, JSON.stringify({ posts, notis: state.notis, votes: state.votes, polls: state.polls, lantern: state.lantern, muted: state.muted }));
+  } catch (e) {}
+}
+
+/* ---------- 효과음 (Web Audio로 합성, 음원 파일 없음) ---------- */
+const sfx = (() => {
+  let ctx;
+  function ac() {
+    if (!ctx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      ctx = new AC();
+    }
+    if (ctx.state === 'suspended') ctx.resume();
+    return ctx;
+  }
+  function tone(freq, dur, { type = 'sine', gain = 0.07, slide, delay = 0 } = {}) {
+    if (state.muted) return;
+    const c = ac();
+    if (!c) return;
+    const t = c.currentTime + delay;
+    const osc = c.createOscillator();
+    const g = c.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, t);
+    if (slide) osc.frequency.exponentialRampToValueAtTime(slide, t + dur);
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(gain, t + 0.006);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    osc.connect(g).connect(c.destination);
+    osc.start(t);
+    osc.stop(t + dur + 0.02);
+  }
+  return {
+    tap()      { tone(540, 0.045, { type: 'triangle', gain: 0.045 }); },
+    up()       { tone(440, 0.09, { type: 'triangle', slide: 880 }); tone(1320, 0.07, { delay: 0.07, gain: 0.035 }); },
+    down()     { tone(380, 0.14, { type: 'triangle', slide: 160 }); },
+    send()     { tone(620, 0.06); tone(930, 0.1, { delay: 0.06 }); },
+    poll()     { tone(784, 0.1); tone(1175, 0.18, { delay: 0.08, gain: 0.05 }); },
+    noti()     { tone(988, 0.12, { gain: 0.06 }); tone(1319, 0.24, { delay: 0.12, gain: 0.06 }); },
+    toggle(on) { tone(on ? 620 : 420, 0.06, { type: 'square', gain: 0.025 }); },
+    lantern(on){ on ? (tone(196, 0.4, { gain: 0.06 }), tone(294, 0.5, { delay: 0.1, gain: 0.04 })) : tone(523, 0.18, { gain: 0.05 }); },
+    reset()    { tone(660, 0.08, { type: 'triangle' }); tone(440, 0.08, { type: 'triangle', delay: 0.08 }); tone(220, 0.16, { type: 'triangle', delay: 0.16 }); }
+  };
+})();
+
+function esc(s) {
+  return String(s ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+}
+const ic = name => `<i data-lucide="${name}"></i>`;
+function icons() { if (window.lucide) lucide.createIcons(); }
+const scoreOf = p => p.up - p.down + (state.votes[p.id] === 'up' ? 1 : state.votes[p.id] === 'down' ? -1 : 0);
+
+let toastTimer;
+function toast(msg, icon = 'info') {
+  const el = document.getElementById('toast');
+  el.innerHTML = `${ic(icon)}<span>${esc(msg)}</span>`;
+  icons();
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 1900);
+}
+
+/* ---------- 홈 피드 ---------- */
+function avatar(key) {
+  const a = AV[key] || AV.falcon;
+  return `<span class="avatar" style="background:${a.color}">${ic(a.icon)}</span>`;
+}
+
+function renderTabs() {
+  document.getElementById('tabs').innerHTML = Object.entries(CATS).map(([k, c]) =>
+    `<button class="tab" role="tab" data-cat="${k}" aria-selected="${state.cat === k}">${ic(c.icon)}${c.label}</button>`
+  ).join('');
+}
+
+function pollHTML(p) {
+  const mine = state.polls[p.id];
+  const counts = p.poll.options.map((o, i) => o.v + (mine === i ? 1 : 0));
+  const total = counts.reduce((a, b) => a + b, 0);
+  const voted = mine !== undefined;
+  return `<div class="poll">
+    <div class="poll-q">${ic('vote')}${esc(p.poll.q)}</div>
+    ${p.poll.options.map((o, i) => {
+      const pct = total ? Math.round(counts[i] / total * 100) : 0;
+      return `<button class="poll-opt ${mine === i ? 'mine' : ''}" data-act="poll" data-i="${i}" ${voted ? 'disabled' : ''}>
+        <span class="bar" style="width:${voted ? pct : 0}%"></span>
+        <span class="txt"><span>${esc(o.t)}</span>${voted ? `<b>${pct}%</b>` : ''}</span>
+      </button>`;
+    }).join('')}
+    <div class="poll-total">${voted ? `총 ${total}명 참여` : '투표하면 결과가 보여요'}</div>
+  </div>`;
+}
+
+function commentHTML(c) {
+  return `<div class="c ${c.deleted ? 'deleted' : ''} ${c._new ? 'new' : ''}">
+    ${avatar(c.av)}
+    <div class="c-main">
+      <div class="c-head">${esc(c.anon)}</div>
+      <div class="c-text">${c.deleted ? '작성자에 의해 삭제된 댓글입니다.' : esc(c.text)}</div>
+    </div>
+  </div>`;
+}
+
+function postHTML(p) {
+  const v = state.votes[p.id];
+  const open = state.open[p.id];
+  const shown = open ? p.comments : p.comments.slice(0, PREVIEW);
+  const hidden = p.comments.length - PREVIEW;
+  return `<article class="post" data-id="${p.id}">
+    <div class="post-main">
+      <div class="meta">
+        ${avatar(p.author.av)}
+        <span class="anon">${esc(p.author.anon)}</span>
+        <span>· ${esc(p.time)}</span>
+      </div>
+      <h3 class="title">${esc(p.title)}</h3>
+      <p class="body">${esc(p.body)}</p>
+      ${p.poll ? pollHTML(p) : ''}
+      <div class="post-foot">
+        <span class="chip">${ic(CATS[p.cat]?.icon || 'hash')}${CATS[p.cat]?.label || ''}</span>
+        <span>·</span>${ic('message-circle')}<span>${p.comments.length}</span>
+      </div>
+      ${p.comments.length ? `<div class="comments">${shown.map(commentHTML).join('')}</div>` : ''}
+      ${hidden > 0 ? `<button class="more ${open ? 'open' : ''}" data-act="more">${open ? '댓글 접기' : `댓글 ${hidden}개 더 보기`}${ic('chevron-down')}</button>` : ''}
+      <form class="cform" data-act="comment">
+        <input name="c" maxlength="300" placeholder="익명으로 댓글 달기" aria-label="댓글 입력" autocomplete="off">
+        <button type="submit" aria-label="댓글 등록">${ic('send')}</button>
+      </form>
+    </div>
+    <div class="votes">
+      <button class="vote up ${v === 'up' ? 'on' : ''}" data-act="up" aria-label="상남자 추천">${ic('arrow-big-up')}</button>
+      <span class="score ${v || ''}">${scoreOf(p)}</span>
+      <button class="vote down ${v === 'down' ? 'on' : ''}" data-act="down" aria-label="게이 비추">${ic('arrow-big-down')}</button>
+    </div>
+  </article>`;
+}
+
+function matches(p, q) {
+  if (!q) return true;
+  return [p.title, p.body, ...p.comments.map(c => c.text)].join(' ').toLowerCase().includes(q.toLowerCase());
+}
+
+function renderFeed() {
+  const list = state.posts.filter(p => (state.cat === 'all' || p.cat === state.cat) && matches(p, state.q));
+  document.getElementById('feed').innerHTML = list.length
+    ? list.map(postHTML).join('')
+    : `<div class="empty">${ic('search-x')}<br>해당하는 가십이 없습니다.<br>상남자들이 아직 아무 말도 안 했나 봅니다.</div>`;
+  state.posts.forEach(p => p.comments.forEach(c => delete c._new));
+}
+
+function upcomingEvents(n) {
+  return [...EVENTS].sort((a, b) => ((a.m - THIS_MONTH + 12) % 12) - ((b.m - THIS_MONTH + 12) % 12)).slice(0, n);
+}
+function renderUpcoming() {
+  document.getElementById('upcoming').innerHTML = upcomingEvents(3)
+    .map(e => `<li><span>${esc(e.title)}</span><span>${e.when}</span></li>`).join('');
+}
+
+/* ---------- 게시판 ---------- */
+function renderBoard() {
+  document.getElementById('boardList').innerHTML = Object.entries(CATS).filter(([k]) => k !== 'all').map(([k, c]) => {
+    const posts = state.posts.filter(p => p.cat === k);
+    return `<button class="card board-card" data-cat="${k}">
+      <span class="row-icon" style="background:${c.color}">${ic(c.icon)}</span>
+      <div class="row-main">
+        <b>${c.label}<span class="count">${posts.length}</span></b>
+        <div class="desc">${c.desc}</div>
+        ${posts[0] ? `<div class="latest">${ic('corner-down-right')}<span>${esc(posts[0].title)}</span></div>` : ''}
+      </div>
+      <span class="row-side">${ic('chevron-right')}</span>
+    </button>`;
+  }).join('');
+  const hot = [...state.posts].sort((a, b) => scoreOf(b) - scoreOf(a)).slice(0, 5);
+  document.getElementById('hotList').innerHTML = hot.map((p, i) => `
+    <button class="row" data-post="${p.id}">
+      <span class="hot-n">${i + 1}</span>
+      <div class="row-main"><b>${esc(p.title)}</b><span>${CATS[p.cat].label} · 댓글 ${p.comments.length}</span></div>
+      <span class="row-side">${ic('arrow-big-up')}${scoreOf(p)}</span>
+    </button>`).join('');
+}
+
+/* ---------- 캠퍼스 ---------- */
+function renderCampus() {
+  const block = sem => EVENTS.filter(e => e.sem === sem).map(e => `
+    <div class="event ${e.m === THIS_MONTH ? 'now' : ''}">
+      <div class="when">${e.when}</div>
+      <span class="ev-icon">${ic(e.icon)}</span>
+      <div class="row-main"><b>${esc(e.title)}${e.m === THIS_MONTH ? '<span class="now-badge">이번 달</span>' : ''}</b>${e.desc ? `<span>${esc(e.desc)}</span>` : ''}</div>
+    </div>`).join('');
+  document.getElementById('eventList').innerHTML =
+    `<div class="sem">가을학기</div>${block('fall')}<div class="sem">봄학기</div>${block('spring')}`;
+}
+
+/* ---------- 알림 ---------- */
+function renderNotiBadge() {
+  const n = state.notis.filter(x => !x.read).length;
+  const b = document.getElementById('notiBadge');
+  b.hidden = n === 0;
+  b.textContent = n;
+}
+function renderNotis() {
+  document.getElementById('notiList').innerHTML = state.notis.length ? state.notis.map(n => `
+    <button class="noti ${n.read ? '' : 'unread'}" data-noti="${n.id}">
+      <span class="row-icon">${ic(n.icon)}</span>
+      <div class="row-main"><div class="txt">${esc(n.text)}</div><span>${esc(n.time)}</span></div>
+    </button>`).join('')
+    : `<div class="empty">${ic('bell-off')}<br>새 알림이 없어요</div>`;
+}
+function pushNoti(n) {
+  state.notis.unshift({ id: 'n' + Date.now(), time: '방금 전', read: false, ...n });
+  save();
+  renderNotiBadge();
+  if (state.view === 'noti') { renderNotis(); icons(); }
+}
+
+/* ---------- MY ---------- */
+function renderMy() {
+  const myPosts = state.posts.filter(p => p.mine);
+  const myComments = state.posts.flatMap(p => p.comments.filter(c => c.mine).map(c => ({ c, p })));
+  const received = myPosts.reduce((s, p) => s + scoreOf(p), 0);
+  document.getElementById('myStats').innerHTML =
+    `<div><b>${myPosts.length}</b><small>작성 글</small></div><div><b>${myComments.length}</b><small>작성 댓글</small></div><div><b>${received}</b><small>받은 추천</small></div>`;
+  document.getElementById('myPosts').innerHTML = myPosts.length ? myPosts.map(p => `
+    <button class="row" data-post="${p.id}">
+      <div class="row-main"><b>${esc(p.title)}</b><span>${CATS[p.cat].label} · ${esc(p.time)} · 댓글 ${p.comments.length}</span></div>
+      <span class="row-side">${ic('arrow-big-up')}${scoreOf(p)}</span>
+    </button>`).join('')
+    : `<div class="empty">${ic('pen-line')}<br>아직 쓴 글이 없어요.<br>홈의 펜 버튼으로 첫 가십을 퍼뜨려 보세요.</div>`;
+  document.getElementById('myComments').innerHTML = myComments.length ? myComments.slice().reverse().map(({ c, p }) => `
+    <button class="row" data-post="${p.id}">
+      <div class="row-main"><b>${esc(c.text)}</b><span>${esc(p.title)}</span></div>
+      <span class="row-side">${ic('chevron-right')}</span>
+    </button>`).join('')
+    : `<div class="empty">${ic('message-circle')}<br>아직 쓴 댓글이 없어요.</div>`;
+  document.getElementById('lanternSwitch').setAttribute('aria-checked', state.lantern);
+  document.getElementById('soundSwitch').setAttribute('aria-checked', !state.muted);
+}
+
+/* ---------- 화면 전환 ---------- */
+function render() {
+  if (state.view === 'home') renderFeed();
+  if (state.view === 'board') renderBoard();
+  if (state.view === 'noti') renderNotis();
+  if (state.view === 'my') renderMy();
+  renderNotiBadge();
+  icons();
+}
+
+function go(view) {
+  state.view = view;
+  ['home', 'board', 'campus', 'noti', 'my'].forEach(v => document.getElementById('view-' + v).hidden = v !== view);
+  document.querySelectorAll('#tabbar button').forEach(b => b.classList.toggle('on', b.dataset.view === view));
+  document.getElementById('searchBar').hidden = view !== 'home';
+  document.getElementById('fabWrap').hidden = view !== 'home';
+  render();
+  window.scrollTo({ top: 0 });
+}
+
+function openPost(id) {
+  state.cat = 'all';
+  state.q = '';
+  document.getElementById('search').value = '';
+  state.open[id] = true;
+  renderTabs();
+  go('home');
+  requestAnimationFrame(() => {
+    const el = document.querySelector(`.post[data-id="${id}"]`);
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    el.classList.add('flash');
+  });
+}
+
+function openCat(cat) {
+  state.cat = cat;
+  state.q = '';
+  document.getElementById('search').value = '';
+  renderTabs();
+  go('home');
+  document.getElementById('tabs').scrollIntoView({ behavior: 'smooth' });
+}
+
+/* ---------- 자동 답글 이스터에그 ---------- */
+function autoReply(post, text, onWhat) {
+  const t = text.toLowerCase();
+  const rule = AUTO_REPLIES.find(r => r.keys.some(k => t.includes(k)));
+  if (!rule) return;
+  toast('익명의 펜싱 브로가 다급하게 댓글을 작성 중입니다…', 'swords');
+  setTimeout(() => {
+    post.comments.push({ ...GIO, text: rule.text, _new: true });
+    state.open[post.id] = true;
+    sfx.noti();
+    pushNoti({ icon: 'swords', text: `익명의 펜싱 브로가 회원님의 ${onWhat}에 답글을 달았어요: "${rule.text}"`, post: post.id });
+    save();
+    render();
+  }, 2000);
+}
+
+/* ---------- 이벤트 ---------- */
+document.getElementById('tabs').addEventListener('click', e => {
+  const b = e.target.closest('.tab');
+  if (!b) return;
+  state.cat = b.dataset.cat;
+  renderTabs(); render();
+});
+
+const feed = document.getElementById('feed');
+feed.addEventListener('click', e => {
+  const btn = e.target.closest('button[data-act]');
+  if (!btn) return;
+  const post = state.posts.find(p => p.id === btn.closest('.post').dataset.id);
+  const act = btn.dataset.act;
+  if (act === 'up' || act === 'down') {
+    state.votes[post.id] = state.votes[post.id] === act ? undefined : act;
+    if (state.votes[post.id] === 'up') { sfx.up(); toast('테스토스테론이 +1 상승했습니다!', 'flame'); }
+    else if (state.votes[post.id] === 'down') { sfx.down(); toast('게이 비추 접수 완료. 애시컴이 지켜보고 있습니다.', 'snowflake'); }
+    else sfx.tap();
+    save(); render();
+  } else if (act === 'poll') {
+    state.polls[post.id] = Number(btn.dataset.i);
+    sfx.poll();
+    toast('투표 완료! 여론이 움직입니다.', 'vote');
+    save(); render();
+  } else if (act === 'more') {
+    state.open[post.id] = !state.open[post.id];
+    render();
+  }
+});
+
+feed.addEventListener('submit', e => {
+  e.preventDefault();
+  const form = e.target;
+  const text = form.c.value.trim();
+  if (!text) return;
+  const post = state.posts.find(p => p.id === form.closest('.post').dataset.id);
+  post.comments.push({ anon: '익명(나)', av: 'me', mine: true, text, _new: true });
+  state.open[post.id] = true;
+  sfx.send();
+  save(); render();
+  autoReply(post, text, '댓글');
+});
+
+document.getElementById('search').addEventListener('input', e => {
+  state.q = e.target.value.trim();
+  render();
+});
+
+document.querySelectorAll('.trend').forEach(b => b.addEventListener('click', () => {
+  document.getElementById('search').value = b.dataset.q;
+  state.q = b.dataset.q;
+  state.cat = 'all';
+  renderTabs(); render();
+  document.getElementById('feed').scrollIntoView({ behavior: 'smooth' });
+}));
+
+document.getElementById('tabbar').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (b) go(b.dataset.view);
+});
+
+// 게시판·MY·알림의 목록 클릭
+document.querySelector('.app').addEventListener('click', e => {
+  const postBtn = e.target.closest('[data-post]');
+  if (postBtn) return openPost(postBtn.dataset.post);
+  const catBtn = e.target.closest('.board-card');
+  if (catBtn) return openCat(catBtn.dataset.cat);
+  const notiBtn = e.target.closest('[data-noti]');
+  if (notiBtn) {
+    const n = state.notis.find(x => x.id === notiBtn.dataset.noti);
+    n.read = true;
+    save();
+    if (n.post) openPost(n.post);
+    else if (n.view) go(n.view);
+    else render();
+  }
+});
+
+document.getElementById('readAll').addEventListener('click', () => {
+  state.notis.forEach(n => n.read = true);
+  save(); render();
+  toast('모든 알림을 읽었어요.', 'check-check');
+});
+
+function setLantern(on, quiet) {
+  state.lantern = on;
+  document.body.dataset.theme = on ? 'lantern' : '';
+  document.getElementById('lanternBtn').setAttribute('aria-pressed', on);
+  document.getElementById('lanternSwitch').setAttribute('aria-checked', on);
+  save();
+  if (!quiet) {
+    sfx.lantern(on);
+    toast(on ? 'The Ninth Lantern에 오신 것을 환영합니다.' : '다시 평범한 캠퍼스로 돌아왔습니다.', 'moon');
+  }
+}
+function setMuted(muted) {
+  state.muted = muted;
+  document.getElementById('soundSwitch').setAttribute('aria-checked', !muted);
+  save();
+  sfx.toggle(!muted);
+  toast(muted ? '효과음을 껐어요.' : '효과음을 켰어요.', muted ? 'volume-x' : 'volume-2');
+}
+document.getElementById('soundSwitch').addEventListener('click', () => setMuted(!state.muted));
+
+// 따로 소리가 정해지지 않은 버튼은 기본 탭 소리
+const CUSTOM_SFX = '.vote, .poll-opt, .switch, .icon-btn, .cform button, .submit, #resetBtn';
+document.addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (b && !b.disabled && !b.matches(CUSTOM_SFX)) sfx.tap();
+}, true);
+document.getElementById('lanternBtn').addEventListener('click', () => setLantern(!state.lantern));
+document.getElementById('lanternSwitch').addEventListener('click', () => setLantern(!state.lantern));
+
+/* 글쓰기 시트 */
+const modal = document.getElementById('writeModal');
+document.getElementById('wCat').innerHTML = Object.entries(CATS).filter(([k]) => k !== 'all')
+  .map(([k, c]) => `<option value="${k}">${c.label}</option>`).join('');
+document.getElementById('writeBtn').addEventListener('click', () => {
+  if (state.cat !== 'all') document.getElementById('wCat').value = state.cat;
+  modal.showModal();
+});
+document.getElementById('closeModal').addEventListener('click', () => modal.close());
+modal.addEventListener('click', e => { if (e.target === modal) modal.close(); });
+document.getElementById('writeForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const title = document.getElementById('wTitle').value.trim();
+  const body = document.getElementById('wBody').value.trim();
+  if (!title || !body) return;
+  const post = {
+    id: 'u' + Date.now(), cat: document.getElementById('wCat').value, time: '방금 전', up: 0, down: 0, mine: true,
+    author: { anon: '익명(나)', av: 'me' }, title, body, comments: []
+  };
+  state.posts.unshift(post);
+  state.cat = 'all';
+  e.target.reset();
+  modal.close();
+  sfx.send();
+  save(); renderTabs(); render();
+  document.getElementById('feed').scrollIntoView({ behavior: 'smooth' });
+  toast('가십이 캠퍼스에 퍼지기 시작했습니다.', 'megaphone');
+  autoReply(post, title + ' ' + body, '글');
+});
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  if (!confirm('내 글, 댓글, 추천, 알림을 모두 지울까요?')) return;
+  state.posts = structuredClone(SEED);
+  state.notis = structuredClone(SEED_NOTIS);
+  state.votes = {}; state.polls = {}; state.open = {};
+  sfx.reset();
+  save(); render();
+  toast('모든 기록이 지워졌습니다. 증거 인멸 완료.', 'rotate-ccw');
+});
+
+load();
+setLantern(state.lantern, true);
+renderTabs();
+renderUpcoming();
+renderCampus();
+go('home');
+</script>
+</body>
+</html>
