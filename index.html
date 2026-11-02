@@ -163,9 +163,7 @@
   .anon { font-weight: 700; color: var(--text); font-size: 13px; }
   .chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--muted); }
   .chip svg.lucide { width: 12px; height: 12px; }
-  .title { font-size: 16px; font-weight: 700; line-height: 1.4; }
-  .post-tag { font-size: 11.5px; font-weight: 700; color: var(--navy); letter-spacing: .2px; margin-bottom: 1px; }
-  .body { margin-top: 5px; font-size: 14.5px; white-space: pre-wrap; word-break: break-word; }
+  .title { font-size: 16px; font-weight: 700; line-height: 1.4; }  .body { margin-top: 5px; font-size: 14.5px; white-space: pre-wrap; word-break: break-word; }
 
   /* 수강후기: 교수 카드 & 별점 */
   .prof { border: 1px solid var(--line); background: var(--soft); border-radius: 12px; padding: 12px; margin-bottom: 8px; }
@@ -662,7 +660,7 @@ const GIO = { anon: '익명의 펜싱 브로', av: 'fencer', real: '지오반니
 // 알파메일 인증방 15선
 const ALPHA = [
   {
-    id: 'a1', cat: 'alpha', time: '8분 전', up: 233, down: 6,
+    id: 'a1', cat: 'alpha', ago: 8, up: 233, down: 6,
     author: { anon: '익명의 라크로스 브로', av: 'lax', real: '브래드' },
     title: "다이닝홀에서 스테이크 '예쁘게' 썰어 먹는 놈 봐라 ㅋㅋ",
     body: '사내새끼가 고기 한 점 썰겠다고 왼손에 포크, 오른손에 나이프 쥐고 팔꿈치 오므린 채 종종거리는 거 실화냐? 무릎에 냅킨까지 펴놓던데 아주 프린세스 납셨네 ㅋㅋ 상남자는 포크 하나로 한가운데 찍어서 그냥 물어뜯는 거다.\n우리 펜싱부 주장 지오(Gio) 봐라. 아까 고기 나오자마자 나이프 바닥에 던져버리고 포크로 찍어서 3분 만에 해치우더라. 크으, 야수 그 자체.',
@@ -672,7 +670,7 @@ const ALPHA = [
     ]
   },
   {
-    id: 'a2', cat: 'alpha', time: '25분 전', up: 188, down: 4,
+    id: 'a2', cat: 'alpha', ago: 27, up: 188, down: 4,
     author: { anon: '벤치프레스 3대 500', av: 'lifter' },
     title: "[경고] 남자 화장실 거울 앞 체류 시간 '3초' 제한한다",
     body: '방금 윈스롭 칼리지 1층 화장실에서 손 씻고 거울 보면서 앞머리 쓸어 넘긴 놈 누구냐? 내 스톱워치로 딱 4.2초 걸렸다.\n거울을 3초 이상 본다 = 자기 얼굴에 취한 게이 확정. 진짜 알파메일은 아침에 찬물로 고양이 세수만 하고 눈곱만 떼고 강의실 들어가는 거다.',
@@ -682,7 +680,7 @@ const ALPHA = [
     ]
   },
   {
-    id: 'a3', cat: 'alpha', time: '40분 전', up: 142, down: 3,
+    id: 'a3', cat: 'alpha', ago: 44, up: 142, down: 3,
     author: { anon: '익명의 스쿼시 부원', av: 'squash' },
     title: '비 오는데 우산 쓰는 놈들은 그냥 타 대학으로 편입해라 ㅋㅋ',
     body: '하늘에서 떨어지는 물방울이 무서워서 천쪼가리 밑에 숨는 게 사내새끼냐? 아까 올드 쿼드에서 체크무늬 우산 쓰고 물웅덩이 피해서 총총걸음으로 걷던 놈 자수해라.\n반면에 지오(Gio) 봐라. 폭우 속에서 가죽 자켓만 입고 미간 찌푸린 채 걸어가는데 테스토스테론이 빗물 타고 흐르더라.',
@@ -692,7 +690,7 @@ const ALPHA = [
     ]
   },
   {
-    id: 'a4', cat: 'alpha', time: '1시간 전', up: 167, down: 9,
+    id: 'a4', cat: 'alpha', ago: 63, up: 167, down: 9,
     author: { anon: '프로틴 중독자', av: 'protein' },
     title: "카페에서 '빨대' 꽂아 마시는 놈들 전부 색출해야 함",
     body: '입술 오므려서 플라스틱 관을 쪽쪽 빨아먹는 행위 자체가 이미 알파메일 실격이다. 게다가 메뉴가 캐러멜 프라푸치노? 휘핑크림까지 올렸더라?\n사내새끼의 음료는 오직 얼음도 안 넣은 뜨거운 블랙커피, 생맥주, 무맛 단백질 쉐이크, 그리고 스트레이트 위스키뿐이다.',
@@ -702,18 +700,18 @@ const ALPHA = [
     ]
   },
   {
-    id: 'a5', cat: 'alpha', time: '1시간 전', up: 204, down: 11,
+    id: 'a5', cat: 'alpha', ago: 81, up: 204, down: 11,
     author: { anon: '익명의 조교', av: 'ta' },
     title: "국제관계학 강의실에 '복숭아 향 립밤' 흘리고 간 놈 누구냐",
     body: '입술이 트면 앞니로 껍질을 물어뜯어서 피를 내는 게 애시컴의 전통이다. 입술에 반짝거리는 기름칠을 하고 다녀? 심지어 뚜껑 열자마자 달달한 복숭아 냄새가 진동을 하네 ㅋㅋ\n지문 감식 의뢰하기 전에 당장 나와서 대가리 박아라.',
     comments: [
       { anon: '익명1', av: 'falcon', text: '겨울에 입술에서 피 안 나면 게이임. 피 맛으로 철분 보충하는 거 국룰 아니냐?' },
       { anon: '익명2', av: 'squash', text: '헐 저번에 줄리안(펜싱부 3학년) 입술이 유독 반질거리던데 설마...?' },
-      { anon: '익명3', av: 'fencer', real: '줄리안', text: '어라, 들켰네? 내 입술이 좀 부럽나 봐, 브로? ;)' }
+      { anon: '익명3', av: 'fencer', real: '줄리안', text: '어라, 들켰네? 내 입술이 좀 부럽나 봐, 브로? 😉' }
     ]
   },
   {
-    id: 'a6', cat: 'alpha', time: '2시간 전', up: 176, down: 5,
+    id: 'a6', cat: 'alpha', ago: 124, up: 176, down: 5,
     author: { anon: '익명의 라크로스 브로', av: 'lax', real: '브래드' },
     title: '파스텔 톤이랑 핑크색 옷 입는 놈들 눈 버린다 진짜',
     body: '남자의 색깔은 블랙, 그레이, 카키, 네이비 딱 네 개다. 오늘 도서관에 연분홍색 캐시미어 니트 입고 온 놈 때문에 내 안구에 게이 바이러스 옮을 뻔함.\n옷도 다림질해서 칼주름 잡혀 있던데, 상남자는 바닥에 굴러다니는 맨투맨 아무거나 주워 입고 나오는 거다. 냄새만 안 나면 3일 연속 입어도 무죄.',
@@ -723,7 +721,7 @@ const ALPHA = [
     ]
   },
   {
-    id: 'a7', cat: 'alpha', time: '2시간 전', up: 287, down: 14,
+    id: 'a7', cat: 'alpha', ago: 146, up: 287, down: 14,
     author: { anon: '체육관 관리인', av: 'cleaner' },
     title: '[분실물] 펜싱 연습장 탈의실 구석에서 발견된 괴물체',
     body: '최고급 수제 대바늘 한 세트랑, 반쯤 짜다 만 베이비 핑크색 목도리, 그리고 꽃무늬 자수가 놓인 손수건이 떨어져 있었습니다. 펜싱부원 중에 주인이 있는 것 같은데 데스크로 찾아가세요.\n안 찾아가면 내일 올드 쿼드 게시판에 박제합니다.',
@@ -734,7 +732,7 @@ const ALPHA = [
     ]
   },
   {
-    id: 'a8', cat: 'alpha', time: '3시간 전', up: 131, down: 2,
+    id: 'a8', cat: 'alpha', ago: 188, up: 131, down: 2,
     author: { anon: '윈스롭 칼리지 사감', av: 'warden' },
     title: "공용 세탁기에서 '수면 양말(곰돌이 무늬)' 나왔다",
     body: '보들보들한 극세사 재질에 발바닥에 미끄럼 방지 젤리까지 붙어있네? 영하 10도에도 기숙사 바닥을 맨발로 걸어 다니는 게 애시컴 사내들의 기개다.\n발 시렵다고 수면 양말 신는 놈은 당장 자퇴서 내라.',
@@ -744,7 +742,7 @@ const ALPHA = [
     ]
   },
   {
-    id: 'a9', cat: 'alpha', time: '4시간 전', up: 245, down: 19,
+    id: 'a9', cat: 'alpha', ago: 243, up: 245, down: 19,
     author: { anon: '경제학과 화석', av: 'fossil' },
     title: "도서관 반납 카트에 '이탈리아 연애 시집' 꽂아둔 놈 나와라",
     body: '산드로 펜나(Sandro Penna)? 이름도 요망하네. 사내새끼가 읽을 책은 『손자병법』, 『월스트리트 제왕들의 투자법』, 『근육 해부학』 딱 세 권뿐이다.\n어디서 감수성 터지게 시집을 읽고 자빠졌냐 ㅋㅋ 심지어 책갈피가 말린 네잎클로버임 ㅋㅋㅋㅋ',
@@ -755,7 +753,7 @@ const ALPHA = [
     ]
   },
   {
-    id: 'a10', cat: 'alpha', time: '5시간 전', up: 158, down: 7,
+    id: 'a10', cat: 'alpha', ago: 302, up: 158, down: 7,
     author: { anon: '대학가 다이너 단골', av: 'dining' },
     title: "핫윙 먹다가 '습- 하-' 소리 내거나 우유 시키는 놈 = 게이",
     body: '어제 24시 다이너에서 고스트 페퍼 핫윙 시켜놓고 눈물 찔끔 흘리면서 쿨피스 찾던 1학년 누구냐? 고통은 오직 미간 주름으로만 참아내는 거다.\n다쳐서 뼈가 부러져도 \'아야\' 소리 내면 그날로 족보에서 파버린다.',
@@ -765,7 +763,7 @@ const ALPHA = [
     ]
   },
   {
-    id: 'a11', cat: 'alpha', time: '6시간 전', up: 119, down: 8,
+    id: 'a11', cat: 'alpha', ago: 366, up: 119, down: 8,
     author: { anon: '조정부 주장', av: 'rower' },
     title: '기침 두 번 했다고 따뜻한 유자차 찾는 놈 실화냐?',
     body: '바이러스 따위에게 굴복해서 약국을 가? 사내새끼는 열이 40도까지 올라가도 찬물 샤워 한 번 하고 스쿼트 100개 조지면 땀으로 다 배출된다.\n알약을 물이랑 삼키는 행위 자체가 나약함의 증거다.',
@@ -775,17 +773,17 @@ const ALPHA = [
     ]
   },
   {
-    id: 'a12', cat: 'alpha', time: '7시간 전', up: 172, down: 12,
+    id: 'a12', cat: 'alpha', ago: 425, up: 172, down: 12,
     author: { anon: '익명의 바텐더', av: 'bartender' },
     title: "대학가 펍에서 '피치 크러쉬' 시키는 남학생들에게 고한다",
     body: '잔 테두리에 설탕 묻혀달라고 하지 마라. 체리랑 조그만 종이 우산 꽂아달라고 하지도 마라. 핑크빛 나는 술 시켜놓고 새끼손가락 치켜들고 마시는 놈들 볼 때마다 쉐이커 던지고 싶다.\n남자는 무조건 온더락 아니면 병나발이다.',
     comments: [
       { anon: '익명1', av: 'falcon', text: '얼음 넣는 것도 솔직히 좀 하남자 같음. 미지근한 보드카 병째로 마셔야지.' },
-      { anon: '익명2', av: 'queen', real: '클로이', text: '어머, 난 지오가 가끔 샴페인 잔 잡을 때 손 모양이 너무 우아해서 좋던데? 물론 지오는 바로 맥주병으로 바꿔 들지만 ;)' }
+      { anon: '익명2', av: 'queen', real: '클로이', text: '어머, 난 지오가 가끔 샴페인 잔 잡을 때 손 모양이 너무 우아해서 좋던데? 물론 지오는 바로 맥주병으로 바꿔 들지만 😉' }
     ]
   },
   {
-    id: 'a13', cat: 'alpha', time: '9시간 전', up: 96, down: 4,
+    id: 'a13', cat: 'alpha', ago: 545, up: 96, down: 4,
     author: { anon: '정치외교학 3학년', av: 'student' },
     title: "강의 시간에 형광펜 '2색 이상' 쓰면 게이 확정이다",
     body: '제목은 파란펜, 중요 표시는 빨간펜, 밑줄은 노란 형광펜? 아주 무지개를 그려라 무지개를 ㅋㅋ\n알파메일은 주머니에서 굴러다니는 부러진 몽땅연필이나 똥 나오는 볼펜 하나로 전공 책 여백에 휘갈겨 쓰는 거다. 필통 들고 다니는 놈도 의심 대상임.',
@@ -795,7 +793,7 @@ const ALPHA = [
     ]
   },
   {
-    id: 'a14', cat: 'alpha', time: '어제', up: 214, down: 10,
+    id: 'a14', cat: 'alpha', ago: 1500, up: 214, down: 10,
     author: { anon: '기숙사 불시점검단', av: 'patrol' },
     title: '침대에 베개 2개 이상 놓거나 인형 두는 놈들 봐라',
     body: '구스다운 이불? 바디필로우? 사내새끼 잠자리는 매트리스 위에 군용 모포 한 장이면 충분하다. 방에서 디퓨저 향기 나는 방들도 전부 명단 적어놨다.\n남자의 방에서는 오직 땀 냄새, 가죽 냄새, 그리고 프로틴 가루 냄새만 나야 한다.',
@@ -806,7 +804,7 @@ const ALPHA = [
     ]
   },
   {
-    id: 'a15', cat: 'alpha', time: '어제', up: 263, down: 9,
+    id: 'a15', cat: 'alpha', ago: 1720, up: 263, down: 9,
     author: { anon: '올드 쿼드 파수꾼', av: 'watcher' },
     title: '캠퍼스 길고양이 보고 혀 짧은 소리 내는 놈 녹음했다',
     body: '도서관 뒤편에 사는 삼색 고양이 보고 "오구오구 우쭈쭈 우리 애기 츄르 머거쪄요~" 하던 굵은 목소리의 주인공, 내일 정오까지 자수해라.\n알파메일은 귀여운 동물을 봐도 팔짱 끼고 턱만 한 번 까딱여주는 법이다.',
@@ -820,20 +818,20 @@ const ALPHA = [
 
 const BASE = [
   {
-    id: 'p2', cat: 'lost', time: '1시간 전', up: 301, down: 12,
+    id: 'p2', cat: 'lost', ago: 72, up: 301, down: 12,
     author: { anon: '익명의 청소부', av: 'cleaner' },
     title: '[분실물] 펜싱 연습장 탈의실 구석에서 발견된 물건 주인 찾습니다',
     body: '최고급 캐시미어 털실(베이비 핑크색) 한 뭉치랑, 꽃무늬 자수가 놓인 손수건, 그리고 이탈리아어로 된 시집(Sandro Penna 작)이 떨어져 있었습니다. 펜싱부원 중에 주인이 있는 것 같은데 데스크로 찾아가세요.',
     poll: { q: '이 물건의 주인은?', options: [ { t: '여친 선물 사다 흘린 알파메일', v: 36 }, { t: '펜싱부에 잠입한 초특급 게이 스파이', v: 264 } ] },
     comments: [
       { anon: '익명1', av: 'falcon', text: '와 미쳤다 펜싱부에 뜨개질하는 놈이 있다고??? 당장 색출해라 이건 애시컴 역사상 최악의 스캔들이다' },
-      { anon: '익명2', av: 'fencer', real: '줄리안', text: '흠, 시집 취향이 아주 우아하네. 주인이 누군지 참 궁금하군 ;)' },
+      { anon: '익명2', av: 'fencer', real: '줄리안', text: '흠, 시집 취향이 아주 우아하네. 주인이 누군지 참 궁금하군 😉' },
       { ...GIO, anon: '익명3', deleted: true, text: '' },
       { ...GIO, anon: '익명3', text: '아씨발 그거 우리 누나가 내 가방에 잘못 넣은 거라고 몇 번을 말해 아니 내 거 아니라고 아무튼 건드리지 마 손때 묻으니까 쓰레기통에 버리지도 마 그냥 가만히 놔둬 내가 가서 치울 거야' }
     ]
   },
   {
-    id: 'p3', cat: 'prince', time: '3시간 전', up: 188, down: 41,
+    id: 'p3', cat: 'prince', ago: 195, up: 188, down: 41,
     author: { anon: '퀸 비 (Queen B)', av: 'queen', real: '클로이' },
     title: '요즘 지오(Gio) 옆에 자꾸 알짱거리는 그 애 정체가 뭐야?',
     body: '윈스롭 칼리지 근처에서도 둘이 말싸움하는 거 봤고, 지오가 걔만 보면 눈을 못 떼고 계속 시비 걸던데. 설마 지오가 걔한테 관심 있는 건 아니겠지? 지오 급 되는 로열 패밀리가 그런 평범한 애랑 엮일 리가 없잖아. 프로스트 볼 파트너는 당연히 나여야 하고. 누가 아는 거 있으면 제보 좀.',
@@ -844,7 +842,7 @@ const BASE = [
     ]
   },
   {
-    id: 'p6', cat: 'prince', time: '6시간 전', up: 154, down: 19,
+    id: 'p6', cat: 'prince', ago: 372, up: 154, down: 19,
     author: { anon: '익명의 다이닝홀 알바', av: 'dining' },
     title: '오늘 왕자님 다이닝홀 목격담',
     body: '지오가 스테이크를 포크로 찍어서 통째로 뜯어먹음. 근데 다 먹고 나서 입가를 냅킨으로 아주 우아하게 톡톡 두드리더라? 그건 뭐임?',
@@ -855,7 +853,7 @@ const BASE = [
     ]
   },
   {
-    id: 'p7', cat: 'bamboo', time: '새벽 2:14', up: 77, down: 1,
+    id: 'p7', cat: 'bamboo', ago: 610, up: 77, down: 1,
     author: { anon: '익명의 불면증', av: 'owl' },
     title: '윈스롭 4층, 새벽 2시에 왜 바늘 딸깍거리는 소리가 나냐',
     body: '그... 뜨개바늘 소리 같은데? 물어보기 무서움.',
@@ -869,7 +867,7 @@ const BASE = [
 // 수강후기 게시판: 일반 글 + 교수 강의평가(prof)
 const REVIEWS = [
   {
-    id: 'r1', cat: 'bamboo', time: '15분 전', up: 198, down: 6,
+    id: 'r1', cat: 'bamboo', ago: 15, up: 198, down: 6,
     author: { anon: '익명의 신입생', av: 'freshman' },
     title: '[실시간] 지금 맥 칼란 교수님 대형 강의실 앞줄 생존자 있냐?',
     body: '오늘 비 와서 습도 높은데 교수님이 히터까지 틀어놓으심. 지금 강의실 공기가 거의 생화학 무기 수준임. 교수님이 팔 들 때마다 겨드랑이 수풀에서 고대 유적지 곰팡이 냄새가 폭풍처럼 밀려오는데, 내 옆자리 남학생 방금 눈 흰자위 보이면서 기절함.\n설상가상으로 교수님 머리 위에서 날파리 두 마리가 짝짓기 비행 중임. 살려줘... 입으로 숨 쉬면 그 냄새가 혀에 내려앉는 기분이야...',
@@ -880,7 +878,7 @@ const REVIEWS = [
     ]
   },
   {
-    id: 'r3', cat: 'bamboo', time: '3시간 전', up: 143, down: 21,
+    id: 'r3', cat: 'bamboo', ago: 204, up: 143, down: 21,
     author: { anon: '알파메일 연구소', av: 'lab' },
     title: "[논쟁] 맥 칼란 교수의 '무세탁 가죽 조끼'는 예술인가 재앙인가",
     body: '맥 칼란 교수님이 사계절 내내 맨살 위에 걸치시는 그 갈색 가죽 조끼 말인데, 소문에 의하면 대학원생 시절부터 단 한 번도 세탁하지 않고 수컷의 땀으로만 무두질한 전설의 갑옷이라고 함.\n털이 수북한 가슴팍과 가죽 조끼가 마찰하며 만들어내는 그 묵직한 야생 멧돼지 향기... 이것이야말로 애시컴이 지향해야 할 궁극의 마초이즘 아닐까?',
@@ -891,7 +889,7 @@ const REVIEWS = [
     ]
   },
   {
-    id: 'pf1', cat: 'review', time: '2시간 전', up: 312, down: 8,
+    id: 'pf1', cat: 'review', ago: 133, up: 312, down: 8,
     author: { anon: '익명의 수강생', av: 'student' },
     title: '[강의평가] 맥 칼란 교수 · POLI 301',
     prof: { name: '맥 칼란', en: 'Mac Callan', initials: 'MC', dept: '국제정치학', code: 'POLI 301', course: '국제정치와 야생의 권력 (전공필수)', rating: 2, note: '테스토스테론 5.0 / 위생 0.0', nick: '날파리 교수 (Lord of the Flies)' },
@@ -902,7 +900,7 @@ const REVIEWS = [
     ]
   },
   {
-    id: 'pf2', cat: 'review', time: '4시간 전', up: 254, down: 5,
+    id: 'pf2', cat: 'review', ago: 252, up: 254, down: 5,
     author: { anon: '익명의 수강생', av: 'student' },
     title: '[강의평가] 버치 해머 교수 · INTL 402',
     prof: { name: '버치 해머', en: 'Butch Hammer', initials: 'BH', dept: '외교사 및 협상론', code: 'INTL 402', course: '강대국의 협상 테이블', rating: 1, note: '안구건조증 유발자', nick: '눈싸움 교수' },
@@ -913,7 +911,7 @@ const REVIEWS = [
     ]
   },
   {
-    id: 'pf3', cat: 'review', time: '5시간 전', up: 221, down: 9,
+    id: 'pf3', cat: 'review', ago: 315, up: 221, down: 9,
     author: { anon: '익명의 수강생', av: 'lifter' },
     title: '[강의평가] 렉스 아이언사이드 교수 · ECON 205',
     prof: { name: '렉스 아이언사이드', en: 'Rex Ironside', initials: 'RI', dept: '거시경제학', code: 'ECON 205', course: '자본주의와 근육의 상관관계', rating: 4, note: '학점 잘 줌, 단 벤치프레스 파운드로 줌', nick: '쇠질 교수' },
@@ -924,7 +922,7 @@ const REVIEWS = [
     ]
   },
   {
-    id: 'pf4', cat: 'review', time: '6시간 전', up: 189, down: 33,
+    id: 'pf4', cat: 'review', ago: 384, up: 189, down: 33,
     author: { anon: '익명의 수강생', av: 'owl' },
     title: '[강의평가] 세바스찬 보울레르 교수 · LIT 108',
     prof: { name: '세바스찬 보울레르', en: 'Sebastian Baudelaire', initials: 'SB', dept: '유럽문학사', code: 'LIT 108', course: '19세기 낭만주의 시와 미학 (교양)', rating: 0, note: '수강신청 자체가 사회적 자살행위', nick: '걸어 다니는 게이 함정' },
@@ -935,7 +933,7 @@ const REVIEWS = [
     ]
   },
   {
-    id: 'pf5', cat: 'review', time: '8시간 전', up: 167, down: 3,
+    id: 'pf5', cat: 'review', ago: 488, up: 167, down: 3,
     author: { anon: '익명의 수강생', av: 'ta' },
     title: '[강의평가] 빅토리아 스틸 교수 · LAW 310',
     prof: { name: '빅토리아 스틸', en: 'Victoria Steel', initials: 'VS', dept: '국제법', code: 'LAW 310', course: '전쟁법과 제네바 협약', rating: 3, note: '남교수들보다 10배 더 마초 같음', nick: '아이언 레이디 (유일한 여교수)' },
@@ -946,7 +944,7 @@ const REVIEWS = [
     ]
   },
   {
-    id: 'pf6', cat: 'review', time: '어제', up: 238, down: 12,
+    id: 'pf6', cat: 'review', ago: 1580, up: 238, down: 12,
     author: { anon: '익명의 수강생', av: 'protein' },
     title: '[강의평가] 채드 썬더콕 교수 · MED 101',
     prof: { name: '채드 썬더콕', en: 'Chad Thundercock', initials: 'CT', dept: '스포츠의학', code: 'MED 101', course: '인류의 진화와 테스토스테론', rating: 5, note: '꿀강, 매시간 생고기 시식회 열림', nick: '프로틴 연금술사' },
@@ -957,7 +955,7 @@ const REVIEWS = [
     ]
   },
   {
-    id: 'pf7', cat: 'review', time: '어제', up: 149, down: 7,
+    id: 'pf7', cat: 'review', ago: 1810, up: 149, down: 7,
     author: { anon: '익명의 수강생', av: 'warden' },
     title: '[강의평가] 아서 펜드래곤 교수 · PHIL 204',
     prof: { name: '아서 펜드래곤', en: 'Arthur Pendragon', initials: 'AP', dept: '정치철학', code: 'PHIL 204', course: '스파르타 국가론', rating: 2, note: '저체온증 걸릴 뻔함', nick: '보일러 파괴자' },
@@ -968,18 +966,18 @@ const REVIEWS = [
     ]
   },
   {
-    id: 'pf8', cat: 'review', time: '2일 전', up: 206, down: 6,
+    id: 'pf8', cat: 'review', ago: 2950, up: 206, down: 6,
     author: { anon: '익명의 수강생', av: 'patrol' },
     title: '[강의평가] 고든 램파트 교수 · COMM 305',
     prof: { name: '고든 램파트', en: 'Gordon Rampart', initials: 'GR', dept: '리더십과 수사학', code: 'COMM 305', course: '대중 연설과 지배자의 포효', rating: 3, note: '수업 끝나면 귀에서 이명 들림', nick: '고막 파괴자' },
     body: '대형 계단식 강의실에서도 마이크를 절대 안 쓰시는데 기본 성량이 제트기 엔진 수준임. 학생들도 프레젠테이션할 때 교탁 앞에 데시벨 측정기를 켜두고 100dB 이하로 말하면 "모기 소리 같은 계집애 발성이다!! 횡격막에 힘 안 줘?!" 하고 그 자리에서 발표자료 찢어버리심.\n그래서 이 수업 발표 날만 되면 건물 밖에서는 무슨 바이킹 약탈선 노 젓는 함성 소리 나는 줄 앎.',
     comments: [
       { anon: '익명1', av: 'falcon', text: '지오(Gio)가 저번에 발표할 때 귀찮아서 대충 중저음으로 나긋나긋하게 읽다가 교수님한테 걸렸는데, 지오 형님이 빡쳐서 이탈리아어 욕 섞어가며 소리 한 번 버럭 질렀더니 교수님이 "바로 그거다!! 완벽한 로열 알파의 포효다!!" 하고 기립박수 치면서 만점 주심 ㅋㅋㅋㅋ' },
-      { anon: '익명2', av: 'fencer', text: '난 지오가 밤에 귓가에서 나지막하게 속삭여줄 때가 훨씬 더 좋던데. 목소리 톤이 아주 감미롭거든 ;)' }
+      { anon: '익명2', av: 'fencer', text: '난 지오가 밤에 귓가에서 나지막하게 속삭여줄 때가 훨씬 더 좋던데. 목소리 톤이 아주 감미롭거든 😉' }
     ]
   },
   {
-    id: 'pf9', cat: 'review', time: '3일 전', up: 277, down: 24,
+    id: 'pf9', cat: 'review', ago: 4420, up: 277, down: 24,
     author: { anon: '익명의 수강생', av: 'queen' },
     title: '[강의평가] 낸시 누난 교수 · ART 104',
     prof: { name: '낸시 누난', en: 'Nancy Noonan', initials: 'NN', dept: '현대예술과 복식사', code: 'ART 104', course: '로코코 시대의 레이스와 남성성 (교양선택)', rating: 5, note: '자존심만 버리면 학점 자판기', nick: '확신의 바텀 교수 (The Ultimate Bottom)' },
@@ -992,7 +990,7 @@ const REVIEWS = [
     ]
   },
   {
-    id: 'pf10', cat: 'review', time: '35분 전', up: 296, down: 7,
+    id: 'pf10', cat: 'review', ago: 35, up: 296, down: 7,
     author: { anon: '익명의 수강생', av: 'lab' },
     title: '[강의평가] 닐 재커리 롤링스 교수 · PSYC 209',
     prof: { name: '닐 재커리 롤링스', en: 'Neil Zachary Rawlings', initials: 'NR', dept: '심층심리학 및 행동분석', code: 'PSYC 209', course: '원시 본능과 무의식의 심연 (교양필수)', rating: 4, note: '교수님이 우아한 존댓말로 내 멘탈을 가루로 만드심', nick: '파란 거인 (The Blue Giant)' },
@@ -1009,9 +1007,8 @@ const REVIEWS = [
 // 펨브로크 컨페션 (Ashcombe Confessions)
 const CONFESSIONS = [
   {
-    id: 'c1', cat: 'bamboo', time: '20분 전', up: 241, down: 9,
+    id: 'c1', cat: 'bamboo', ago: 20, up: 241, down: 9,
     author: { anon: '익명', av: 'owl' },
-    tag: '#Confession_4081',
     title: '[죄책감 고백] 마카롱 밀수 사건',
     body: '어제 뉴욕 그랜드 센트럴 역 근처 프랑스 베이커리에서 라즈베리 마카롱이랑 얼그레이 케이크 사서 기숙사로 밀반입했다. 룸메이트가 라크로스 원정 경기 간 사이에 방문 걸어 잠그고 커튼 다 치고 불 끈 상태에서 이불 뒤집어쓰고 먹었음.\n한 입 베어 무는데 너무 달콤해서 눈물 날 뻔했다. 다 먹고 상자랑 영수증은 지문 남을까 봐 라이터로 태워서 변기에 내려보냄. 나 아직 애시컴의 알파메일 맞겠지...? 신이시여 용서하소서.',
     comments: [
@@ -1020,9 +1017,8 @@ const CONFESSIONS = [
     ]
   },
   {
-    id: 'c2', cat: 'bamboo', time: '어제 오후 11:45', up: 388, down: 17,
+    id: 'c2', cat: 'bamboo', ago: 1310, up: 388, down: 17,
     author: { anon: '익명', av: 'watcher' },
-    tag: '#Confession_4082',
     title: '[목격담] 펨브로크 홀의 심야 괴담',
     body: "며칠 전 밤 11시 반쯤, 폐쇄된 옛 음악관(펨브로크 홀) 앞을 지나가다가 진짜 기절할 뻔함. 안쪽 복도에서 누가 벽에 '쾅!' 하고 거칠게 밀쳐지는 소리가 나더니, 남자 둘의 거친 숨소리랑 옷자락 스치는 소리가 적막한 건물 안에 다 울리더라.\n누가 밤중에 거기서 비밀 파이트 클럽이라도 여는 줄 알고 문틈으로 살짝 봤는데... 키 크고 금발인 남자(누가 봐도 윈스롭 칼리지 사는 그 로열 패밀리...)가 웬 남자한테 벽치기 당한 채로 고개 젖히고 키스하고 있었음.\n내가 헛것을 본 거냐? 우리 학교 최고의 마초 알파 킹카가 남자의 밑에 깔리는 쪽이었다고??",
     comments: [
@@ -1033,9 +1029,8 @@ const CONFESSIONS = [
     ]
   },
   {
-    id: 'c3', cat: 'bamboo', time: '1시간 전', up: 302, down: 6,
+    id: 'c3', cat: 'bamboo', ago: 95, up: 302, down: 6,
     author: { anon: '익명', av: 'warden' },
-    tag: '#Confession_4083',
     title: '[Overheard] 윈스롭 칼리지 세탁실',
     body: '새벽 3시에 아무도 없을 때 몰래 피치 향 섬유유연제 쓰려고 기숙사 지하 세탁실 내려갔거든? 근데 펜싱부 주장 지오반니가 흰색 앞치마 같은 수건을 두르고 다리미로 자기 셔츠 주름을 0.1mm의 오차도 없이 칼각으로 다리고 있는 거임.\n다 끝나더니 갑자기 그 방금 다린 셔츠를 두 손으로 사정없이 구겨서 바닥에 한 번 패대기친 다음 "휴, 이 정도면 대충 입은 것 같군" 중얼거리고 올라감. 나 지금 뭘 본 거지...?',
     comments: [
@@ -1044,9 +1039,8 @@ const CONFESSIONS = [
     ]
   },
   {
-    id: 'c4', cat: 'bamboo', time: '2시간 전', up: 156, down: 22,
+    id: 'c4', cat: 'bamboo', ago: 158, up: 156, down: 22,
     author: { anon: '익명', av: 'owl' },
-    tag: '#Confession_4084',
     title: '[고해성사] 타 대학 여친과의 비밀',
     body: '나 사실 라이벌 학교인 해리슨 대학교(Harrison Univ) 다니는 여자친구 있음. 근데 여친이 데이트할 때마다 나보고 스킨로션 좀 바르고 수염 좀 깔끔하게 밀고 오라고 해서, 매주 금요일마다 기차 타기 전에 기차역 화장실에서 몰래 폼클렌징으로 세수하고 수분크림 바름.\n그리고 일요일 밤에 애시컴 돌아올 땐 기차 안에서 일부러 창문 열고 미세먼지 맞으면서 얼굴 다시 거칠게 만들고 들어온다. 이중생활 너무 힘들다...',
     comments: [
@@ -1055,9 +1049,8 @@ const CONFESSIONS = [
     ]
   },
   {
-    id: 'c5', cat: 'bamboo', time: '3시간 전', up: 274, down: 11,
+    id: 'c5', cat: 'bamboo', ago: 214, up: 274, down: 11,
     author: { anon: '익명', av: 'watcher' },
-    tag: '#Confession_4085',
     title: '[제보] The Ninth Lantern 탭 나이트 목격담',
     body: "지난 봄 '탭 나이트(Tap Night)' 때 창문 없는 무덤 건물 뒤편에서 비밀결사 신입 회원 신고식 하는 거 몰래 봤는데, 검은 로브 입은 선배들이 3학년 신입들한테 생마늘 30쪽이랑 날달걀 10개 껍질째 씹어 삼키게 하더라.\n그게 세계를 움직이는 엘리트 네트워크의 의식이냐 아니면 그냥 식중독 챌린지냐?",
     comments: [
@@ -1066,20 +1059,18 @@ const CONFESSIONS = [
     ]
   },
   {
-    id: 'c6', cat: 'bamboo', time: '4시간 전', up: 319, down: 28,
+    id: 'c6', cat: 'bamboo', ago: 264, up: 319, down: 28,
     author: { anon: '익명', av: 'queen' },
-    tag: '#Confession_4086',
     title: '[가십] 클로이 밴더빌트의 굴욕',
     body: '어제 사교클럽 갈라 파티에서 클로이 밴더빌트가 가슴 파인 드레스 입고 지오반니 팔짱 끼려고 다가갔는데, 지오가 자기 코트 소매에 클로이 향수 냄새 배는 거 싫다고 옆에 있던 1학년(요즘 지오가 맨날 쫓아다니면서 괴롭히는 그 애) 방패막이로 세우고 도망가는 거 본 사람?\n클로이 표정 완전 썩어들어가던데 ㅋㅋㅋ 요즘 지오 눈길이 온통 그 애한테만 꽂혀 있던데 둘이 진짜 무슨 사이임?',
     comments: [
       { anon: '익명1', av: 'queen', text: '도망간 게 아니라 지오가 나한테 샴페인 가져다주려고 자리 비운 거거든? 그리고 그 근본도 없는 애랑 모나코 왕자가 엮일 리가 없잖아. 수준 떨어지게 가십 만들지 마.' },
-      { anon: '익명2', av: 'fencer', text: '글쎄, 우리 주장이 원래 한 번 꽂히면 꽤 집요한 편인데. 이번엔 꽤 재밌는 장난감을 찾은 모양이네 ;)' }
+      { anon: '익명2', av: 'fencer', text: '글쎄, 우리 주장이 원래 한 번 꽂히면 꽤 집요한 편인데. 이번엔 꽤 재밌는 장난감을 찾은 모양이네 😉' }
     ]
   },
   {
-    id: 'c7', cat: 'bamboo', time: '5시간 전', up: 198, down: 5,
+    id: 'c7', cat: 'bamboo', ago: 328, up: 198, down: 5,
     author: { anon: '익명', av: 'lifter' },
-    tag: '#Confession_4087',
     title: '[고백] 나의 은밀한 플레이리스트',
     body: "헬스장에서 3대 500파운드 칠 때 에어팟 끼고 인상을 쓰며 헤비메탈 듣는 척하지만... 사실 내 플레이리스트는 전부 테일러 스위프트(Taylor Swift)랑 라나 델 레이(Lana Del Rey), 그리고 쇼팽 녹턴이다.\n'Shake It Off' 후렴구 나올 때 데드리프트 당기면 중량이 평소보다 20파운드 더 올라감. 만약 운동하다가 블루투스 연결 끊겨서 체육관 전체에 테일러 스위프트 노래 울려 퍼지면 난 그 자리에서 바벨 밑에 목 넣고 자결할 거다.",
     comments: [
@@ -1088,9 +1079,8 @@ const CONFESSIONS = [
     ]
   },
   {
-    id: 'c8', cat: 'bamboo', time: '7시간 전', up: 227, down: 8,
+    id: 'c8', cat: 'bamboo', ago: 436, up: 227, down: 8,
     author: { anon: '익명', av: 'patrol' },
-    tag: '#Confession_4088',
     title: '[경고] 기숙사 샤워실 바디워시 사건',
     body: "올드 쿼드 기숙사 2층 샤워실에 누가 '체리블라썸 바디워시'랑 '레이스 달린 샤워볼' 놓고 갔냐? 사내새끼는 머리부터 발끝까지 차가운 빨래비누(Dial 비누) 하나로 30초 만에 끝내는 거다.\n거품 내서 몸 문지르는 놈 색출해서 올드 쿼드 분수대에 입수시킨다.",
     comments: [
@@ -1099,9 +1089,8 @@ const CONFESSIONS = [
     ]
   },
   {
-    id: 'c9', cat: 'bamboo', time: '어제', up: 412, down: 14,
+    id: 'c9', cat: 'bamboo', ago: 1620, up: 412, down: 14,
     author: { anon: '익명', av: 'dining' },
-    tag: '#Confession_4089',
     title: '[목격담] 대학가 24시 다이너의 기적',
     body: '새벽 2시에 시험공부하다가 배고파서 다이너 갔는데, 구석 부스에서 지오반니가 그 애(요즘 지오랑 맨날 붙어 다니는 애) 앞에 앉아서 팬케이크 시럽을 대신 뿌려주고 있었음. 심지어 포크랑 나이프도 지오가 자기 손수건으로 열 번 넘게 박박 닦아서 쥐여주던데?\n그 애가 "너 게이냐?" 하고 한마디 툭 던지니까 지오 얼굴 시뻘게져서 테이블 치고 쌍욕 박으면서도 끝까지 옆자리 안 떠나더라 ㅋㅋㅋㅋ 이거 혐관 로맨스 맞지?',
     comments: [
@@ -1110,9 +1099,8 @@ const CONFESSIONS = [
     ]
   },
   {
-    id: 'c10', cat: 'bamboo', time: '2일 전', up: 286, down: 3,
+    id: 'c10', cat: 'bamboo', ago: 3010, up: 286, down: 3,
     author: { anon: '익명', av: 'freshman' },
-    tag: '#Confession_4090',
     title: '[고백] 프로스트 볼 파트너 구함',
     body: '12월 블랙타이 무도회 \'프로스트 볼(Frost Ball)\' 다가오는데 아직도 파트너 못 구했다... 솔직히 여자한테 말 거는 것보다 렉스 교수님 앞에서 벤치프레스 300파운드 드는 게 백 배는 더 쉬움.\n여자 앞에만 서면 마초 연기하느라 "어이, 거기 암컷. 나랑 스테이크나 뜯으러 갈까?" 이 지랄하게 돼서 차인 게 벌써 다섯 번째다. 나 어떡하냐?',
     comments: [
@@ -1122,13 +1110,8 @@ const CONFESSIONS = [
   }
 ];
 
-// 피드 노출 순서: 게시판별 글을 섞어서 보여줌
-const SEED_ORDER = [
-  'a1', 'c1', 'r1', 'p2', 'a2', 'pf10', 'c2', 'pf1', 'a3', 'p3', 'c3', 'a4', 'pf2', 'a5', 'c4', 'r3', 'a6', 'pf3',
-  'c5', 'a7', 'p6', 'c6', 'pf4', 'a8', 'c7', 'a9', 'pf5', 'p7', 'c8', 'a10', 'pf6', 'a11', 'c9', 'pf7', 'a12',
-  'pf8', 'c10', 'a13', 'pf9', 'a14', 'a15'
-];
-const SEED = SEED_ORDER.map(id => [...ALPHA, ...BASE, ...REVIEWS, ...CONFESSIONS].find(p => p.id === id));
+// 기본 글의 ago는 "몇 분 전"인지(숫자). 피드는 항상 최신순으로 정렬됨
+const SEED = [...ALPHA, ...BASE, ...REVIEWS, ...CONFESSIONS];
 
 const SEED_NOTIS = [
   { id: 'n0', icon: 'graduation-cap', text: '수강후기 게시판이 열렸어요. 맥 칼란 교수 강의실 생존 정보를 공유해 주세요', time: '10분 전', cat: 'review', read: false },
@@ -1148,7 +1131,7 @@ const AUTO_REPLIES = [
   { keys: ['왕자', '지오', 'gio', '모나코'], text: '지오 형님 얘기 함부로 하는 거 아니다 브로' }
 ];
 
-const STORE_KEY = 'ashcombe-sidechat-v10';
+const STORE_KEY = 'ashcombe-sidechat-v13';
 const PREVIEW = 2;
 let state = {
   posts: structuredClone(SEED), notis: structuredClone(SEED_NOTIS), votes: {}, polls: {},
@@ -1222,6 +1205,16 @@ function esc(s) {
 }
 const ic = name => `<i data-lucide="${name}"></i>`;
 function icons() { if (window.lucide) lucide.createIcons(); }
+// 직접 쓴 글은 작성 시각(created), 기본 글은 ago(분)로 경과 시간을 계산
+const ageOf = p => p.created ? (Date.now() - p.created) / 60000 : p.ago;
+function timeLabel(p) {
+  const m = Math.floor(ageOf(p));
+  if (m < 1) return '방금 전';
+  if (m < 60) return `${m}분 전`;
+  if (m < 1440) return `${Math.floor(m / 60)}시간 전`;
+  if (m < 2880) return '어제';
+  return `${Math.floor(m / 1440)}일 전`;
+}
 const scoreOf = p => p.up - p.down + (state.votes[p.id] === 'up' ? 1 : state.votes[p.id] === 'down' ? -1 : 0);
 
 let toastTimer;
@@ -1301,9 +1294,8 @@ function postHTML(p) {
       <div class="meta">
         ${avatar(p.author.av)}
         <span class="anon">${esc(p.author.anon)}</span>
-        <span>· ${esc(p.time)}</span>
+        <span>· ${timeLabel(p)}</span>
       </div>
-      ${p.tag ? `<div class="post-tag">${esc(p.tag)}</div>` : ''}
       ${p.prof ? profHTML(p.prof) : `<h3 class="title">${esc(p.title)}</h3>`}
       ${p.quote ? `<div class="quote">${starsHTML(p.rating)}<span>${esc(p.quote)}</span></div>` : ''}
       <p class="body">${esc(p.body)}</p>
@@ -1333,7 +1325,9 @@ function matches(p, q) {
 }
 
 function renderFeed() {
-  const list = state.posts.filter(p => (state.cat === 'all' || p.cat === state.cat) && matches(p, state.q));
+  const list = state.posts
+    .filter(p => (state.cat === 'all' || p.cat === state.cat) && matches(p, state.q))
+    .sort((a, b) => ageOf(a) - ageOf(b));
   document.getElementById('feed').innerHTML = list.length
     ? list.map(postHTML).join('')
     : `<div class="empty">${ic('search-x')}<br>해당하는 가십이 없습니다.<br>상남자들이 아직 아무 말도 안 했나 봅니다.</div>`;
@@ -1351,7 +1345,7 @@ function renderUpcoming() {
 /* ---------- 게시판 ---------- */
 function renderBoard() {
   document.getElementById('boardList').innerHTML = Object.entries(CATS).filter(([k]) => k !== 'all').map(([k, c]) => {
-    const posts = state.posts.filter(p => p.cat === k);
+    const posts = state.posts.filter(p => p.cat === k).sort((a, b) => ageOf(a) - ageOf(b));
     return `<button class="card board-card" data-cat="${k}">
       <span class="row-icon" style="background:${c.color}">${ic(c.icon)}</span>
       <div class="row-main">
@@ -1407,14 +1401,14 @@ function pushNoti(n) {
 
 /* ---------- MY ---------- */
 function renderMy() {
-  const myPosts = state.posts.filter(p => p.mine);
+  const myPosts = state.posts.filter(p => p.mine).sort((a, b) => ageOf(a) - ageOf(b));
   const myComments = state.posts.flatMap(p => p.comments.filter(c => c.mine).map(c => ({ c, p })));
   const received = myPosts.reduce((s, p) => s + scoreOf(p), 0);
   document.getElementById('myStats').innerHTML =
     `<div><b>${myPosts.length}</b><small>작성 글</small></div><div><b>${myComments.length}</b><small>작성 댓글</small></div><div><b>${received}</b><small>받은 추천</small></div>`;
   document.getElementById('myPosts').innerHTML = myPosts.length ? myPosts.map(p => `
     <button class="row" data-post="${p.id}">
-      <div class="row-main"><b>${esc(p.title)}</b><span>${CATS[p.cat].label} · ${esc(p.time)} · 댓글 ${p.comments.length}</span></div>
+      <div class="row-main"><b>${esc(p.title)}</b><span>${CATS[p.cat].label} · ${timeLabel(p)} · 댓글 ${p.comments.length}</span></div>
       <span class="row-side">${ic('arrow-big-up')}${scoreOf(p)}</span>
     </button>`).join('')
     : `<div class="empty">${ic('pen-line')}<br>아직 쓴 글이 없어요.<br>홈의 펜 버튼으로 첫 가십을 퍼뜨려 보세요.</div>`;
@@ -1619,7 +1613,7 @@ document.getElementById('writeForm').addEventListener('submit', e => {
   const body = document.getElementById('wBody').value.trim();
   if (!title || !body) return;
   const post = {
-    id: 'u' + Date.now(), cat: document.getElementById('wCat').value, time: '방금 전', up: 0, down: 0, mine: true,
+    id: 'u' + Date.now(), cat: document.getElementById('wCat').value, created: Date.now(), up: 0, down: 0, mine: true,
     author: { anon: '익명(나)', av: 'me' }, title, body, comments: []
   };
   state.posts.unshift(post);
