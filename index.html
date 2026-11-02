@@ -184,6 +184,14 @@
   .st.on svg.lucide { color: var(--gold); fill: var(--gold); }
   .quote { background: var(--soft); border-left: 3px solid var(--gold); border-radius: 8px; padding: 8px 10px; color: var(--text); margin-top: 8px; font-size: 13px; }
 
+  /* 분실물: 습득물 상자 */
+  .found {
+    display: flex; gap: 8px; align-items: flex-start; margin-top: 8px; padding: 9px 11px;
+    background: var(--soft); border: 1px dashed var(--line); border-radius: 10px; font-size: 13px;
+  }
+  .found svg.lucide { width: 16px; height: 16px; color: var(--green); margin-top: 2px; }
+  .found b { display: block; font-size: 11.5px; color: var(--green); margin-bottom: 1px; }
+
   .votes { display: flex; flex-direction: column; align-items: center; gap: 2px; width: 40px; flex-shrink: 0; }
   .vote { width: 36px; height: 34px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; color: var(--muted); }
   .vote svg.lucide { width: 22px; height: 22px; }
@@ -722,17 +730,6 @@ const ALPHA = [
     ]
   },
   {
-    id: 'a7', cat: 'alpha', ago: 146, up: 287, down: 14,
-    author: { anon: '체육관 관리인', av: 'cleaner' },
-    title: '[분실물] 펜싱 연습장 탈의실 구석에서 발견된 괴물체',
-    body: '최고급 수제 대바늘 한 세트랑, 반쯤 짜다 만 베이비 핑크색 목도리, 그리고 꽃무늬 자수가 놓인 손수건이 떨어져 있었습니다. 펜싱부원 중에 주인이 있는 것 같은데 데스크로 찾아가세요.\n안 찾아가면 내일 올드 쿼드 게시판에 박제합니다.',
-    comments: [
-      { anon: '익명1', av: 'falcon', text: '와 미쳤다 펜싱부에 뜨개질하는 놈이 있다고??? 당장 색출해라 이건 애시컴 역사상 최악의 게이 스캔들이다!!' },
-      { ...GIO, anon: '익명2', text: '아씨발 그거 우리 누나가 내 가방에 잘못 넣은 거라고 몇 번을 말해 아니 내 거 아니라고 아무튼 더러운 손으로 건드리지 마 손때 묻으니까 쓰레기통에 버리지도 마 그냥 가만히 놔둬 내가 가서 치울 거야' },
-      { anon: '익명3', av: 'lifter', text: '익명2는 왜 저렇게 급발진함? ㅋㅋㅋ 니 누나 거냐?' }
-    ]
-  },
-  {
     id: 'a8', cat: 'alpha', ago: 188, up: 131, down: 2,
     author: { anon: '윈스롭 칼리지 사감', av: 'warden' },
     title: "공용 세탁기에서 '수면 양말(곰돌이 무늬)' 나왔다",
@@ -740,17 +737,6 @@ const ALPHA = [
     comments: [
       { anon: '익명1', av: 'falcon', text: '그거 내 룸메이트 거 같은데 ㅋㅋ 밤에 자면서 이불도 끝까지 덮고 자더라. 상남자는 팬티만 입고 창문 열고 자는데.' },
       { anon: '익명2', av: 'rower', text: '수면 양말은 솔직히 퇴학 사유 맞음.' }
-    ]
-  },
-  {
-    id: 'a9', cat: 'alpha', ago: 243, up: 245, down: 19,
-    author: { anon: '경제학과 화석', av: 'fossil' },
-    title: "도서관 반납 카트에 '이탈리아 연애 시집' 꽂아둔 놈 나와라",
-    body: '산드로 펜나(Sandro Penna)? 이름도 요망하네. 사내새끼가 읽을 책은 『손자병법』, 『월스트리트 제왕들의 투자법』, 『근육 해부학』 딱 세 권뿐이다.\n어디서 감수성 터지게 시집을 읽고 자빠졌냐 ㅋㅋ 심지어 책갈피가 말린 네잎클로버임 ㅋㅋㅋㅋ',
-    comments: [
-      { ...GIO, anon: '익명1', text: "야 이 교양 없는 오랑우탄 새끼들아 문학의 '문' 자도 모르는 뇌 근육들이 시의 가치를 알기나 하냐? 그리고 그거 네잎클로버 아니라 제비꽃 압화다 멍청아" },
-      { anon: '익명2', av: 'falcon', text: 'ㅋㅋㅋㅋ 제비꽃 압화 ㅋㅋㅋㅋㅋ 범인 검거 완료!! 여기 초특급 문학 게이요!!' },
-      { ...GIO, anon: '익명1', deleted: true, text: '' }
     ]
   },
   {
@@ -818,19 +804,6 @@ const ALPHA = [
 ];
 
 const BASE = [
-  {
-    id: 'p2', cat: 'lost', ago: 72, up: 301, down: 12,
-    author: { anon: '익명의 청소부', av: 'cleaner' },
-    title: '[분실물] 펜싱 연습장 탈의실 구석에서 발견된 물건 주인 찾습니다',
-    body: '최고급 캐시미어 털실(베이비 핑크색) 한 뭉치랑, 꽃무늬 자수가 놓인 손수건, 그리고 이탈리아어로 된 시집(Sandro Penna 작)이 떨어져 있었습니다. 펜싱부원 중에 주인이 있는 것 같은데 데스크로 찾아가세요.',
-    poll: { q: '이 물건의 주인은?', options: [ { t: '여친 선물 사다 흘린 알파메일', v: 36 }, { t: '펜싱부에 잠입한 초특급 게이 스파이', v: 264 } ] },
-    comments: [
-      { anon: '익명1', av: 'falcon', text: '와 미쳤다 펜싱부에 뜨개질하는 놈이 있다고??? 당장 색출해라 이건 애시컴 역사상 최악의 스캔들이다' },
-      { anon: '익명2', av: 'fencer', real: '줄리안', text: '흠, 시집 취향이 아주 우아하네. 주인이 누군지 참 궁금하군 😉' },
-      { ...GIO, anon: '익명3', deleted: true, text: '' },
-      { ...GIO, anon: '익명3', text: '아씨발 그거 우리 누나가 내 가방에 잘못 넣은 거라고 몇 번을 말해 아니 내 거 아니라고 아무튼 건드리지 마 손때 묻으니까 쓰레기통에 버리지도 마 그냥 가만히 놔둬 내가 가서 치울 거야' }
-    ]
-  },
   {
     id: 'p3', cat: 'prince', ago: 195, up: 188, down: 41,
     author: { anon: '퀸 비 (Queen B)', av: 'queen', real: '클로이' },
@@ -1218,12 +1191,128 @@ const ROYAL = [
   }
 ];
 
+// 분실물 센터 (Lost & Found)
+const LOST = [
+  {
+    id: 'l1', cat: 'lost', ago: 50, up: 356, down: 12,
+    author: { anon: '익명', av: 'cleaner' },
+    title: '[펜싱 연습장 탈의실] 핑크 캐시미어와 대바늘 사건',
+    found: '최고급 이탈리아산 베이비 핑크색 캐시미어 털실 한 뭉치, 반쯤 짜다 만 꽈배기 무늬 목도리, 장미나무로 만든 수제 대바늘 1세트',
+    body: '오후 훈련 끝나고 구석 사물함 밑에서 발견했습니다. 사내새끼들이 땀 흘리며 칼질하는 신성한 펜싱장에 이런 아가씨 물건이 왜 떨어져 있는 건지 이해가 안 가네요.\n코가 한 땀도 안 풀리고 엄청 정교하게 잘 짰던데, 펜싱부에 잠입한 뜨개질 게이 누구냐? 안 찾아가면 내일 라크로스부 주장 브래드한테 넘겨서 올드 쿼드에서 화형식 거행합니다.',
+    poll: { q: '이 물건의 주인은?', options: [ { t: '여친 선물 사다 흘린 알파메일', v: 36 }, { t: '펜싱부에 잠입한 초특급 게이 스파이', v: 264 } ] },
+    comments: [
+      { anon: '익명1', av: 'lax', text: 'ㅋㅋㅋㅋㅋ 야 당장 가져와라!! 내가 라크로스 스틱에 매달아서 캠퍼스 한 바퀴 돌면서 주인 얼굴 좀 보자 ㅋㅋㅋ' },
+      { ...GIO, anon: '익명2', text: '야 이 도둑놈의 새끼들아 남의 물건을 왜 마음대로 태워!! 그거 내 막내 여동생이 내 가방에 잘못 넣은 거라고 몇 번을 말하냐 그리고 브래드 너 그 캐시미어 털실에 더러운 손대서 보풀 일기만 해봐 내가 네 라크로스 스틱 반으로 접어서 콧구멍에 쑤셔 넣어줄 테니까 건드리지 말고 경비실에 고이 모셔놔 시발!!' },
+      { anon: '익명3', av: 'falcon', text: '여동생 물건인데 왜 보풀 일까 봐 저렇게 오열함? ㅋㅋㅋㅋㅋ' }
+    ]
+  },
+  {
+    id: 'l2', cat: 'lost', ago: 142, up: 289, down: 9,
+    author: { anon: '익명', av: 'student' },
+    title: '[중앙 도서관 반납 카트] 이탈리아 연애 시집',
+    found: '『Sandro Penna - Poesie (산드로 펜나 시집)』 양장본 1권 (책갈피: 정성스럽게 말린 보라색 제비꽃 압화)',
+    body: '근육 해부학이랑 월스트리트 투자론 책들 사이에 웬 요망한 이탈리아어 시집이 껴있었습니다. 여백에 만년필로 엄청 유려한 필기체로 감상평까지 적어놨던데, 애시컴에 시(Poetry) 읽고 꽃 말리는 문학 소년이 서식 중이라는 게 실화냐?',
+    comments: [
+      { ...GIO, anon: '익명1', text: '야 이 무식한 오랑우탄 새끼야 그거 전 세계에 500부밖에 없는 초판본 양장본이다 네 그 프로틴 묻은 기름진 손가락으로 책장 넘기지 마 종이 산성화되니까!! 당장 도서관 안내 데스크에 흰 장갑 끼고 반납해 놔라' },
+      { anon: '익명2', av: 'falcon', text: '초판본인 건 어떻게 아는데 ㅋㅋㅋㅋㅋ 범인 1초 만에 자수 완료 ㅋㅋㅋㅋ' }
+    ]
+  },
+  {
+    id: 'l3', cat: 'lost', ago: 77, up: 231, down: 4,
+    author: { anon: '익명', av: 'ta' },
+    title: '[POLI 301 강의실] 방독면 급 구호물품',
+    found: '프랑스산 최고급 백합 향 오드퍼퓸(향수) 공병, 의료용 손 소독제(에탄올 83%) 대용량 2통, 일회용 비닐장갑 1박스',
+    body: '오늘 맥 칼란(날파리) 교수님 수업 끝나고 맨 뒷줄 구석 자리 책상 밑에서 나왔습니다. 누가 수업 듣다가 교수님 페로몬을 못 견디고 밀수해 온 것 같은데, 향수 뿌리다가 교수님한테 걸리면 학점 F 플러스 팔굽혀펴기 200개인 거 모름? 목숨 아까우면 몰래 찾아가라.',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '아 그 자리 아까 지오반니(Gio)가 앉았던 자리 아니냐? ㅋㅋㅋ' },
+      { ...GIO, anon: '익명2', text: '내 거 아니다 시발 그리고 솔직히 그 강의실엔 손 소독제가 아니라 화염방사기를 가져가서 소각해야 정상 아니냐?!' }
+    ]
+  },
+  {
+    id: 'l4', cat: 'lost', ago: 925, up: 397, down: 15,
+    author: { anon: '익명', av: 'owl' },
+    title: '[펨브로크 홀 1층 복도] 심야의 커프스단추',
+    found: '18K 백금에 사파이어가 박힌 정장 셔츠용 커프스단추 한 짝, 누군가의 앞니 자국이 선명하게 남아서 구겨진 명품 실크 손수건',
+    body: '폐쇄된 옛 음악관에 담력 시험하러 들어갔다가 복도 벽 밑에서 주웠습니다. 커프스단추 뒷면에 아주 작게 왕관 모양 각인이 박혀있고, 손수건은 누가 입에 물고 신음소리라도 참았는지 침 자국이랑 앞니 자국이 나 있던데... 여기서 밤마다 대체 무슨 짓을 하는 거임??',
+    comments: [
+      { anon: '익명1', av: 'fencer', text: '어머, 그게 거기 떨어져 있었네. 주인이 꽤 격렬하게 움직이다가 흘렸나 봐 😉' },
+      { ...GIO, anon: '익명2', text: '야 너 누구야 그거 당장 안 내놔?! 그거 장물아비한테 팔아넘기려다가 걸리면 모나코 대사관 통해서 인터폴 수배 내려버릴 줄 알아라 그리고 손수건은 입에 문 게 아니라 먼지 닦은 거다 개소리하지 마!!' }
+    ]
+  },
+  {
+    id: 'l5', cat: 'lost', ago: 233, up: 205, down: 6,
+    author: { anon: '익명', av: 'patrol' },
+    title: '[올드 쿼드 남자 화장실] 금단의 뷰티 파우치',
+    found: '복숭아 향 립밤, 무향 핸드크림, 큐티클 제거용 손톱깎이 세트, 기름종이',
+    body: '세면대 옆에서 발견된 최악의 게이 키트입니다. 사내새끼가 손톱 옆에 거스러미 좀 일어났다고 큐티클을 정리해? 겨울에 손등이 거북이 등껍질처럼 갈라져서 피가 철철 나도 엔진오일 한 번 바르고 마는 게 애시컴의 법도다.\n현재 학생회 규율위원회에서 지문 채취 중이니 자진 납세해라.',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '큐티클이 뭔데? 먹는 거냐? 프로틴 함유량 몇 그램임?' },
+      { ...GIO, anon: '익명2', text: '손톱 밑에 때 끼고 손등 갈라진 채로 악수 청하는 니들이 인간이냐 유인원이냐 기본적인 위생 관리도 게이라고 몰아가는 이 미친 학교에 핵폭탄이나 떨어졌으면 좋겠네 진짜' }
+    ]
+  },
+  {
+    id: 'l6', cat: 'lost', ago: 18, up: 318, down: 3,
+    author: { anon: '익명', av: 'lifter' },
+    title: '[캠퍼스 헬스장 파워랙 옆] 에어팟 한쪽 (테일러 스위프트 재생 중)',
+    found: '에어팟 프로 오른쪽 유닛 1개',
+    body: "누가 스쿼트 치다가 흘리고 간 것 같은데, 바닥에서 주워보니까 볼륨 최대치로 테일러 스위프트의 'Love Story'가 흘러나오고 있었습니다.\n평소엔 다들 데스메탈이나 고든 램파트 교수님 포효 녹음본 들으면서 쇠질하는 척하더니, 이 중에 줄리엣을 찾는 로미오 새끼가 숨어있었네 ㅋㅋㅋ",
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '주인 지금 자퇴서 쓰러 행정실 뛰어가는 중일 듯 ㅋㅋㅋㅋㅋ' },
+      { anon: '익명2', av: 'lax', text: '어... 그거 내 친구 거 같은데 내가 대신 찾아다 줄게. 어디에 뒀냐? (절대 내 거 아님 난 테일러 스위프트가 누군지도 모름 아무튼 빨리 줘)' }
+    ]
+  },
+  {
+    id: 'l7', cat: 'lost', ago: 565, up: 147, down: 2,
+    author: { anon: '익명', av: 'warden' },
+    title: '[기숙사 공용 세탁실] 곰돌이 자수 실내용 슬리퍼',
+    found: '폭신폭신한 메모리폼이 들어간 베이지색 극세사 실내화 한 짝',
+    body: '건조기 뒤쪽 틈새에 빠져 있었습니다. 남자는 기숙사 안에서도 군화나 맨발로 생활하는 게 국룰인데, 발바닥 아프다고 구름 같은 메모리폼 슬리퍼를 신고 다니는 공주님이 누구십니까?',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '저거 혹시 낸시 누난 교수님이 기숙사 놀러 왔다가 흘리고 가신 거 아님? ㅋㅋㅋ' },
+      { anon: '익명2', av: 'squash', text: '발 사이즈가 285mm(US 10.5)인데 발 큰 운동부 놈들 중 하나가 범인이다 ㅋㅋㅋ' }
+    ]
+  },
+  {
+    id: 'l8', cat: 'lost', ago: 1355, up: 384, down: 7,
+    author: { anon: '익명', av: 'watcher' },
+    title: '[윈스롭 칼리지 정문 앞] 주인 잃은 모나코 왕실 우산',
+    found: '손잡이가 최고급 마호가니 원목으로 되어 있고 금장 문양이 박힌 검은색 장우산',
+    body: '어제 비 온 날 누군가가 기숙사 우산꽂이에 꽂아두고 안 가져갔습니다. 우리 학교에서 우산 쓰는 건 암묵적 금기인데, 대체 어떤 간 큰 놈이 이런 귀티 나는 우산을 쓰고 다닌 거냐?',
+    comments: [
+      { anon: '익명1', av: 'falcon', text: '어제 그 애(요즘 지오반니가 맨날 괴롭히는 애)가 그 우산 쓰고 가는 거 봤는데?!' },
+      { ...GIO, anon: '익명2', text: '그 멍청한 녀석이 내가 빌려준... 아 아니 내가 쓰레기통에서 주워서 던져준 걸 또 어따 흘리고 다닌 거냐고!! 야 그거 아무나 손대지 마 내가 가서 회수할 거니까' }
+    ]
+  },
+  {
+    id: 'l9', cat: 'lost', ago: 296, up: 266, down: 5,
+    author: { anon: '익명', av: 'dining' },
+    title: '[다이닝홀 퇴식구] 휴대용 은제 커트러리 세트',
+    found: '벨벳 케이스에 든 개인용 은제 포크, 나이프, 티스푼 세트 (소독약 냄새 남)',
+    body: '다이닝홀 식판 반납하는 곳에 누가 흘리고 갔습니다. 학식당 공용 포크 쓰는 게 더러워서 개인용 은식기를 품에 넣고 다니면서 몰래 꺼내 쓰는 결벽증 도련님이 계신 모양인데, 은수저 물고 태어났다고 자랑하냐?',
+    comments: [
+      { ...GIO, anon: '익명1', text: '니들이 학식당 포크로 이 쑤시고 바닥에 떨어뜨린 거 그대로 수거함에 넣는 걸 내가 두 눈으로 똑똑히 봤는데 공용 식기를 어떻게 입에 대냐고!! 그 벨벳 케이스 안쪽에 손대지 말고 그대로 안내 데스크에 놔둬라' },
+      { anon: '익명2', av: 'falcon', text: 'ㅋㅋㅋㅋㅋ 이 정도면 분실물 센터 지분 80%가 지오 형님 거 아니냐고 ㅋㅋㅋㅋㅋ' }
+    ]
+  },
+  {
+    id: 'l10', cat: 'lost', ago: 4210, up: 302, down: 6,
+    author: { anon: '익명', av: 'lax' },
+    title: '[해리슨대 원정 응원 버스 안] 핑크색 수면 안대 & 귀마개',
+    found: '실크 소재의 연분홍색 수면 안대와 소음 차단용 폼 귀마개',
+    body: '지난주 팰컨 게임 원정 응원 갔던 라크로스부/펜싱부 합동 버스 뒷좌석 시트 밑에서 나왔습니다. 이동하는 3시간 내내 다들 버스 안에서 맥주 캔 대가리로 찌그러뜨리면서 군가 부르고 있었는데, 그 와중에 뒤에서 실크 안대 끼고 숙면 취하신 예민보스 프린세스 누구십니까?',
+    comments: [
+      { ...GIO, anon: '익명1', text: '시발 버스 안에서 원숭이 새끼들처럼 3시간 내내 괴성 지르고 트림해대는데 귀마개 안 끼고 배기냐?! 그리고 그거 연분홍색 아니라 채도 낮은 코랄 베이지(Coral Beige)다 색맹 새끼야!!' },
+      { anon: '익명2', av: 'falcon', text: "'코랄 베이지' ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ 사내새끼가 코랄 베이지를 어떻게 아는데 ㅋㅋㅋㅋㅋㅋ 게임 끝났다!!" }
+    ]
+  }
+];
+
 // 기본 글의 ago는 "몇 분 전"인지(숫자). 피드는 항상 최신순으로 정렬됨
-const SEED = [...ALPHA, ...BASE, ...REVIEWS, ...CONFESSIONS, ...ROYAL];
+const SEED = [...ALPHA, ...BASE, ...REVIEWS, ...CONFESSIONS, ...ROYAL, ...LOST];
 
 const SEED_NOTIS = [
   { id: 'n0', icon: 'graduation-cap', text: '수강후기 게시판이 열렸어요. 맥 칼란 교수 강의실 생존 정보를 공유해 주세요', time: '10분 전', cat: 'review', read: false },
-  { id: 'n1', icon: 'flame',         text: '[분실물] 펜싱 연습장 탈의실 글이 HOT 게시판에 올랐어요', time: '1시간 전', post: 'p2', read: false },
+  { id: 'n1', icon: 'flame',         text: '[분실물] 펜싱 연습장 탈의실 글이 HOT 게시판에 올랐어요', time: '1시간 전', post: 'l1', read: false },
   { id: 'n2', icon: 'triangle-alert', text: '마초 자치위원회: 도서관 3층 핸드크림 사건 제보를 받습니다', time: '3시간 전', read: false },
   { id: 'n3', icon: 'trophy',         text: '팰컨 게임 원정 응원 버스 신청이 열렸어요', time: '어제', view: 'campus', read: false },
   { id: 'n4', icon: 'ghost',          text: '펨브로크 홀 심야 괴담 글에 새 댓글이 달렸어요', time: '어제', post: 'c2', read: true },
@@ -1239,7 +1328,7 @@ const AUTO_REPLIES = [
   { keys: ['왕자', '지오', 'gio', '모나코'], text: '지오 형님 얘기 함부로 하는 거 아니다 브로' }
 ];
 
-const STORE_KEY = 'ashcombe-sidechat-v15';
+const STORE_KEY = 'ashcombe-sidechat-v17';
 const PREVIEW = 2;
 let state = {
   posts: structuredClone(SEED), notis: structuredClone(SEED_NOTIS), votes: {}, polls: {},
@@ -1406,6 +1495,7 @@ function postHTML(p) {
       </div>
       ${p.prof ? profHTML(p.prof) : `<h3 class="title">${esc(p.title)}</h3>`}
       ${p.quote ? `<div class="quote">${starsHTML(p.rating)}<span>${esc(p.quote)}</span></div>` : ''}
+      ${p.found ? `<div class="found">${ic('package-open')}<div><b>습득물</b>${esc(p.found)}</div></div>` : ''}
       <p class="body">${esc(p.body)}</p>
       ${p.poll ? pollHTML(p) : ''}
       <div class="post-foot">
